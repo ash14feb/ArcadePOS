@@ -1,0 +1,72 @@
+﻿<aside class="flex h-full w-64 flex-shrink-0 flex-col justify-between bg-white p-4 border-r border-neutral-200">
+    <div class="flex flex-col gap-8">
+        <div class="flex items-center gap-3 px-3">
+            <!-- Add your logo here when ready -->
+             <img  class="h-auto w-full max-w-[150px]" src="images/logo.png"/> 
+        </div>
+        <nav class="flex flex-col gap-1">
+            <NavLink class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-colors" href="" Match="NavLinkMatch.All">
+                <span class="material-symbols-outlined text-neutral-700">dashboard</span>
+                <p class="text-neutral-700 text-sm font-medium leading-normal">Dashboard</p>
+            </NavLink>
+       @*      <NavLink class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-colors" href="pos">
+                <span class="material-symbols-outlined text-neutral-700">shopping_cart</span>
+                <p class="text-neutral-700 text-sm font-medium leading-normal">Point of Sale</p>
+            </NavLink> *@
+            <NavLink class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-colors" href="manage-customer">
+                <span class="material-symbols-outlined text-neutral-700">group</span>
+                <p class="text-neutral-700 text-sm font-medium leading-normal">Manage Customer</p>
+            </NavLink>
+
+             <NavLink class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-colors" href="reports">
+                <span class="material-symbols-outlined text-neutral-700">bar_chart</span>
+                <p class="text-neutral-700 text-sm font-medium leading-normal">Reports</p>
+            </NavLink>
+            <NavLink class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-colors" href="administration">
+    <span class="material-symbols-outlined text-neutral-700">admin_panel_settings</span>
+    <p class="text-neutral-700 text-sm font-medium leading-normal">Administration</p>
+</NavLink>
+            @* <div>
+                <span class="material-symbols-outlined text-neutral-700">contactless</span>
+                <button class="flex w-full items-center justify-between gap-3 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-neutral-700">bar_chart</span>
+                        <p class="text-neutral-700 text-sm font-medium leading-normal">Reports</p>
+                    </div>
+                    <span class="material-symbols-outlined text-neutral-500 transition-transform">expand_more</span>
+                </button>
+                <div class="mt-1 flex flex-col gap-1 pl-6 border-l border-neutral-200 ml-4">
+                    <NavLink class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-colors" href="sales-report">
+                        <p class="text-neutral-700 text-sm font-medium leading-normal">Sales Report</p>
+                    </NavLink>
+                    <NavLink class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-colors" href="payment-report">
+                        <p class="text-neutral-700 text-sm font-medium leading-normal">Payment Report</p>
+                    </NavLink>
+                    <NavLink class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-colors" href="refund-report">
+                        <p class="text-neutral-700 text-sm font-medium leading-normal">Refund Report</p>
+                    </NavLink>
+                </div> 
+            </div>*@
+            
+            <NavLink class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-colors" href="settings">
+                <span class="material-symbols-outlined text-neutral-700">settings</span>
+                <p class="text-neutral-700 text-sm font-medium leading-normal">Settings</p>
+            </NavLink>
+        </nav>
+    </div>
+    
+    <div class="flex flex-col gap-3">
+        <div class="px-3 py-2 rounded-lg bg-neutral-100 text-center">
+            <p class="text-sm font-medium text-neutral-700">Welcome</p>
+            <p class="text-base font-bold text-neutral-900">StaffAshwaq</p>
+        </div>
+        <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-neutral-100 transition-colors" href="">
+            <span class="material-symbols-outlined text-neutral-700">logout</span>
+            <p class="text-neutral-700 text-sm font-medium leading-normal">Log Out</p>
+        </a>
+    </div>
+</aside>
+
+@code {
+    // You can add code here for active link styling if needed
+}

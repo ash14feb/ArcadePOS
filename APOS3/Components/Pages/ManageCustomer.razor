@@ -1,0 +1,381 @@
+﻿@* ManageCustomer.razor *@
+@page "/manage-customer"
+
+<div class="max-w-6xl mx-auto p-6 w-full">
+    <!-- Header with Search -->
+    <div class="mb-8">
+        <div class="mb-6">
+            <label class="flex flex-col min-w-40 h-12 w-full">
+                <div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+                    <div class="text-neutral-500 flex border border-neutral-300 bg-white items-center justify-center pl-4 rounded-l-lg border-r-0">
+                        <span class="material-symbols-outlined">search</span>
+                    </div>
+                    <input @bind="searchText" @onkeypress="HandleKeyPress"
+                           class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-neutral-800 focus:outline-0 focus:ring-1 focus:ring-primary focus:border-primary border-neutral-300 border bg-white h-full placeholder:text-neutral-500 px-4 text-base font-normal leading-normal" 
+                           placeholder="Search by Phone Number or RFID"/>
+                    <button @onclick="SearchCustomer" 
+                            class="ml-2 bg-primary text-white px-6 py-2 rounded-lg font-semibold hover:bg-primary-dark transition-colors">
+                        Search
+                    </button>
+                </div>
+            </label>
+            @if (!string.IsNullOrEmpty(searchError))
+            {
+                <div class="text-red-500 text-sm mt-2">@searchError</div>
+            }
+        </div>
+    </div>
+
+    <!-- Your Existing Packages Grid - MOVED TO TOP -->
+    <div class="w-full mb-8">
+        @if (bonuses == null)
+        {
+            <div class="flex justify-center items-center py-12">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+            </div>
+        }
+        else if (!bonuses.Any())
+        {
+            <div class="text-center text-gray-500 py-8">
+                No recharge amounts configured
+            </div>
+        }
+        else
+        {
+            <div class="grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 w-full">
+                @{
+                    var colorSchemes = new[]
+                    {
+                        new { BgFrom = "from-indigo-200", BgTo = "to-purple-200", TextColor = "text-indigo-900", IconColor = "text-indigo-500/50", Icon = "joystick" },
+                        new { BgFrom = "from-sky-200", BgTo = "to-blue-200", TextColor = "text-sky-900", IconColor = "text-sky-500/50", Icon = "gamepad" },
+                        new { BgFrom = "from-emerald-200", BgTo = "to-teal-200", TextColor = "text-emerald-900", IconColor = "text-emerald-500/50", Icon = "sports_esports" },
+                        new { BgFrom = "from-amber-200", BgTo = "to-orange-200", TextColor = "text-amber-900", IconColor = "text-amber-500/50", Icon = "stadia_controller" },
+                        new { BgFrom = "from-rose-200", BgTo = "to-pink-200", TextColor = "text-rose-900", IconColor = "text-rose-500/50", Icon = "man" },
+                        new { BgFrom = "from-fuchsia-200", BgTo = "to-primary/30", TextColor = "text-fuchsia-900", IconColor = "text-fuchsia-500/50", Icon = "videogame_asset" },
+                        new { BgFrom = "from-yellow-200", BgTo = "to-lime-200", TextColor = "text-yellow-900", IconColor = "text-yellow-500/50", Icon = "trophy" }
+                    };
+                }
+                
+                @for (int i = 0; i < bonuses.Count(); i++)
+                {
+                    var bonus = bonuses.ElementAt(i);
+                    var colorScheme = colorSchemes[i % colorSchemes.Length];
+                    var isSelected = OrderStateService.SelectedBonus?.Amount == bonus.Amount;
+                    var selectedClass = isSelected ? "ring-4 ring-primary ring-opacity-50 scale-105" : "";
+                    
+                    <button @onclick="() => SelectAmount(bonus)" 
+                            class="group relative flex flex-col justify-between p-4 aspect-[4/3] rounded-xl overflow-hidden cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 bg-gradient-to-br @colorScheme.BgFrom @colorScheme.BgTo @selectedClass w-full">
+                        <span class="material-symbols-outlined text-5xl @colorScheme.IconColor group-hover:scale-110 transition-transform">@colorScheme.Icon</span>
+                        <p class="@colorScheme.TextColor text-2xl font-bold leading-tight">Rs @bonus.Amount</p>
+                        
+                        @if (bonus.Bonus_Amount > 0)
+                        {
+                            <div class="absolute top-2 right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full font-semibold">
+                                +@bonus.Bonus_Amount
+                            </div>
+                        }
+                        
+                        @if (isSelected)
+                        {
+                            <div class="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded-full font-semibold">
+                                ✓
+                            </div>
+                        }
+                    </button>
+                }
+            </div>
+        }
+    </div>
+
+    <!-- Horizontal Tabs -->
+    <div class="border-b border-gray-200 mb-8 w-full">
+        <nav class="-mb-px flex space-x-8 w-full">
+            <button @onclick="() => SwitchTab(0)" 
+                    class="@GetTabClass(0) whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                Manage Customer
+            </button>
+            <button @onclick="() => SwitchTab(1)" 
+                    class="@GetTabClass(1) whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                Payment History
+            </button>
+            <button @onclick="() => SwitchTab(2)" 
+                    class="@GetTabClass(2) whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm">
+                Game History
+            </button>
+        </nav>
+    </div>
+
+    <!-- Loading State -->
+    @if (isLoading)
+    {
+        <div class="flex justify-center items-center py-12">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+            <span class="ml-2 text-gray-600">Searching...</span>
+        </div>
+    }
+    else if (currentCustomer == null && !string.IsNullOrEmpty(searchText) && !string.IsNullOrEmpty(searchError))
+    {
+        <!-- Error State -->
+        <div class="text-center text-gray-500 py-8">
+            <span class="material-symbols-outlined text-4xl text-gray-400 mb-2">search_off</span>
+            <p>@searchError</p>
+        </div>
+    }
+    else if (currentCustomer == null)
+    {
+        <!-- Initial State - Show search prompt -->
+        <div class="text-center text-gray-500 py-12">
+            <span class="material-symbols-outlined text-4xl text-gray-400 mb-4">person_search</span>
+            <p class="text-lg">Enter a phone number or RFID to search for a customer</p>
+        </div>
+    }
+    else
+    {
+        <!-- Customer Found - Show Tab Content -->
+        <div class="tab-content w-full">
+            @if (activeTab == 0)
+            {
+                <!-- Manage Customer Tab -->
+                <div class="space-y-6 w-full">
+                    <!-- Customer Info Box -->
+                    <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm w-full">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-semibold text-gray-900">Customer Information</h3>
+                            <span class="px-3 py-1 @(currentCustomer.status == "ACTIVE" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800") rounded-full text-sm font-medium">
+                                @currentCustomer.status
+                            </span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-600">Customer Name</label>
+                                <p class="text-lg font-semibold text-gray-900">@currentCustomer.name</p>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-600">Phone Number</label>
+                                <p class="text-lg font-semibold text-gray-900">@currentCustomer.phone</p>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-600">Email</label>
+                                <p class="text-lg font-semibold text-gray-900">@(string.IsNullOrEmpty(currentCustomer.email) ? "Not provided" : currentCustomer.email)</p>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-600">RFID</label>
+                                <p class="text-lg font-semibold text-gray-900">@currentCustomer.rfid</p>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-600">Customer ID</label>
+                                <p class="text-lg font-semibold text-gray-900">@currentCustomer.id</p>
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-medium text-gray-600">VIP Status</label>
+                                <p class="text-lg font-semibold @(currentCustomer.is_vip == 1 ? "text-yellow-600" : "text-gray-600")">
+                                    @(currentCustomer.is_vip == 1 ? "VIP Customer" : "Regular")
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+                        <!-- Tickets Won -->
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-100 border border-green-200 rounded-xl p-6 text-center">
+                            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="material-symbols-outlined text-white text-2xl">confirmation_number</span>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Tickets Won</h4>
+                            <p class="text-3xl font-bold text-green-600">@TicketsWon</p>
+                            <p class="text-sm text-gray-600 mt-2">Total tickets earned</p>
+                        </div>
+
+                        <!-- Balance Amount -->
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-100 border border-blue-200 rounded-xl p-6 text-center">
+                            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="material-symbols-outlined text-white text-2xl">account_balance_wallet</span>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Balance Amount</h4>
+                            <p class="text-3xl font-bold text-blue-600">Rs @TotalBalance</p>
+                            @if (currentCustomer?.balance_bonus > 0)
+                            {
+                                <p class="text-sm text-green-600 mt-1">Main: Rs @(currentCustomer?.balance_main ?? 0) | Bonus: Rs @(currentCustomer?.balance_bonus ?? 0)</p>
+                            }
+                            <button class="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors">
+                                Add Funds
+                            </button>
+                        </div>
+
+                        <!-- Last Activity -->
+                        <div class="bg-gradient-to-br from-purple-50 to-violet-100 border border-purple-200 rounded-xl p-6 text-center">
+                            <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span class="material-symbols-outlined text-white text-2xl">sports_esports</span>
+                            </div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-2">Last Activity</h4>
+                            <p class="text-lg font-bold text-purple-600">
+                                @if (currentCustomer.last_activity.HasValue)
+                                {
+                                    @currentCustomer.last_activity.Value.ToString("MMM dd, yyyy")
+                                }
+                                else
+                                {
+                                    <span class="text-gray-500">No activity</span>
+                                }
+                            </p>
+                            <p class="text-sm text-gray-600 mt-2">Last game played</p>
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (activeTab == 1)
+            {
+                <!-- Payment History Tab -->
+                <div class="space-y-6 w-full">
+                    <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm w-full">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-6">Payment History - @currentCustomer.name</h3>
+
+                        @if (!customerPayments.Any())
+                        {
+                            <div class="text-center text-gray-500 py-8">
+                                <span class="material-symbols-outlined text-4xl text-gray-400 mb-2">receipt_long</span>
+                                <p>No payment history found</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="space-y-4 w-full">
+                                @foreach (var payment in customerPayments)
+                                {
+                                    <div class="flex items-center justify-between p-4 border border-gray-100 rounded-lg hover:bg-gray-50 w-full">
+                                        <div class="flex items-center space-x-4">
+                                            <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                                                <span class="material-symbols-outlined text-green-600">payments</span>
+                                            </div>
+                                            <div>
+                                                <p class="font-semibold text-gray-900">@GetPaymentDescription(payment)</p>
+                                                <p class="text-sm text-gray-500">@payment.created_at.ToString("MMM dd, yyyy 'at' h:mm tt")</p>
+                                                <div class="flex items-center space-x-2 mt-1">
+                                                    <span class="px-2 py-1 text-xs font-semibold rounded-full @GetPaymentStatusBadgeClass(payment)">
+                                                        @GetPaymentStatusText(payment)
+                                                    </span>
+                                                    <span class="text-xs text-gray-400">@payment.payment_mode</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="text-right">
+                                            <p class="font-bold text-green-600">Rs @payment.collect_amount_from_customer</p>
+                                            @if (payment.bonus_amount > 0)
+                                            {
+                                                <p class="text-sm text-blue-600">+ Rs @payment.bonus_amount bonus</p>
+                                            }
+                                            <p class="text-xs text-gray-500 mt-1">
+                                                Balance: @payment.pre_amount → @payment.post_amount
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else if (activeTab == 2)
+            {
+                <!-- Game History Tab -->
+                <div class="space-y-6 w-full">
+                    <!-- Balance Header -->
+                    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl p-6 text-white w-full">
+                        <div class="flex items-center justify-between w-full">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-2">Current Balance - @currentCustomer.name</h3>
+                                <p class="text-3xl font-bold">Rs @TotalBalance</p>
+                                @if (currentCustomer.balance_bonus > 0)
+                                {
+                                    <p class="text-indigo-200 mt-1">Main: Rs @currentCustomer.balance_main | Bonus: Rs @currentCustomer.balance_bonus</p>
+                                }
+                            </div>
+                            <div class="text-right">
+                                <p class="text-indigo-100">Available Credits</p>
+                                <button class="mt-2 bg-white text-indigo-600 px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                                    Add Funds
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Game History Grid - COMPACT VERSION -->
+                    <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden w-full">
+                        <div class="px-4 py-3 border-b border-gray-200 w-full">
+                            <h3 class="text-lg font-semibold text-gray-900">Game History - @currentCustomer.name</h3>
+                        </div>
+                        
+                        @if (!gameHistory.Any())
+                        {
+                            <div class="text-center text-gray-500 py-6">
+                                <span class="material-symbols-outlined text-3xl text-gray-400 mb-2">sports_esports</span>
+                                <p>No game history found</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="overflow-x-auto w-full">
+                                <table class="w-full text-sm">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Game Name</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tickets</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                            <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        @foreach (var game in gameHistory)
+                                        {
+                                            <tr class="@GetGameRowClass(game)">
+                                                <td class="px-4 py-3 whitespace-nowrap">
+                                                    <div class="flex items-center">
+                                                        <div class="w-6 h-6 bg-indigo-100 rounded flex items-center justify-center mr-2">
+                                                            <span class="material-symbols-outlined text-indigo-600 text-xs">sports_esports</span>
+                                                        </div>
+                                                        <div class="text-xs font-medium text-gray-900 truncate max-w-[120px]">@game.log_game</div>
+                                                    </div>
+                                                </td>
+                                                <td class="px-4 py-3 whitespace-nowrap">
+                                                    <div class="text-xs text-gray-900">@game.created_at.ToString("MMM dd, yyyy")</div>
+                                                    <div class="text-xs text-gray-500">@game.created_at.ToString("h:mm tt")</div>
+                                                </td>
+                                                <td class="px-4 py-3 whitespace-nowrap text-xs text-gray-900">
+                                                    Rs @game.amount
+                                                </td>
+                                                <td class="px-4 py-3 whitespace-nowrap text-xs text-gray-900">
+                                                    @(game.token_earn > 0 ? $"+{game.token_earn}" : "0")
+                                                </td>
+                                                <td class="px-4 py-3 whitespace-nowrap">
+                                                    <span class="px-2 inline-flex text-xs leading-4 font-semibold rounded-full @GetStatusBadgeClass(game)">
+                                                        @GetStatusText(game)
+                                                    </span>
+                                                </td>
+                                                <td class="px-4 py-3 whitespace-nowrap text-xs font-medium">
+                                                    @if (game.is_refund != "YES")
+                                                    {
+                                                        <button @onclick="() => ProcessRefund(game)" 
+                                                                class="text-red-600 hover:text-red-900 bg-red-50 hover:bg-red-100 px-2 py-1 rounded text-xs font-medium transition-colors">
+                                                            Refund
+                                                        </button>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-gray-400 text-xs">Refunded</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

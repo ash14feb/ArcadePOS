@@ -1,0 +1,552 @@
+﻿@using APOS3.Models
+@using APOS3.DataAccess
+@using APOS3.DataAccess.Repos
+@using APOS3.Services
+@inject OrderStateService OrderStateService
+@inject IJSRuntime JSRuntime
+@inject ICustomerRepository CustomerRepository
+@inject IBillingRepository BillingRepository
+@implements IDisposable
+@inject IPaymentRepository PaymentRepository
+<aside class="flex h-full w-96 flex-shrink-0 flex-col bg-white border-l border-neutral-200">
+    <div class="flex flex-col p-6 flex-1 overflow-y-auto">
+        <h2 class="text-neutral-900 text-2xl font-bold leading-tight tracking-[-0.015em] pb-5">Current Order</h2>
+        
+        <div class="flex flex-col gap-4">
+            <h3 class="text-neutral-800 text-lg font-bold leading-tight tracking-[-0.015em]">Customer Details</h3>
+            
+            <div>
+                <label class="block text-sm font-medium text-neutral-500 mb-1" for="customer-rfid">RFID</label>
+                <div class="relative">
+                    <input @ref="rfidInputRef"
+                           @bind="customerRfid"
+                           @oninput="OnRfidChanged"
+                           @onkeydown="KeepFocusOnRfid"
+                           class="@GetRfidCss()"
+                           placeholder="Scan RFID" />
+
+                    @if (!string.IsNullOrEmpty(customerRfid))
+                    {
+                        <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                                @onclick="ClearRfid">
+                            <span class="material-symbols-outlined text-sm">close</span>
+                        </button>
+                    }
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-neutral-500 mb-1" for="customer-name">Name</label>
+                <input class="form-input w-full rounded-lg text-neutral-800 bg-neutral-100 border-neutral-300 focus:ring-primary focus:border-primary" 
+                       id="customer-name" placeholder="Enter customer name" type="text"
+                       @bind="customerName" />
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-neutral-500 mb-1" for="customer-email">Email</label>
+                <input class="form-input w-full rounded-lg text-neutral-800 bg-neutral-100 border-neutral-300 focus:ring-primary focus:border-primary" 
+                       id="customer-email" placeholder="Enter email address" type="email"
+                       @bind="customerEmail" />
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-neutral-500 mb-1" for="customer-phone">Phone</label>
+                    <input class="form-input w-full rounded-lg text-neutral-800 bg-neutral-100 border-neutral-300 focus:ring-primary focus:border-primary" 
+                           id="customer-phone" placeholder="Enter phone number" type="tel"
+                           @bind="customerPhone" />
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-neutral-500 mb-1" for="customer-dob">Date of Birth</label>
+                    <input class="form-input w-full rounded-lg text-neutral-800 bg-neutral-100 border-neutral-300 focus:ring-primary focus:border-primary"
+                           id="customer-dob" type="date" @bind="customerDob" @bind:format="yyyy-MM-dd" />
+                           
+                          
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-neutral-500 mb-1">Payment Mode</label>
+                <div class="grid grid-cols-3 gap-2">
+                    <button class="flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-colors border-2 @(selectedPaymentMode == "Cash" ? "bg-primary/10 text-primary border-primary" : "bg-neutral-100 hover:bg-neutral-200 text-neutral-700 border-transparent")"
+                            @onclick='() => SelectPaymentMode("Cash")'>
+                        Cash
+                    </button>
+                    <button class="flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-colors border-2 @(selectedPaymentMode == "UPI" ? "bg-primary/10 text-primary border-primary" : "bg-neutral-100 hover:bg-neutral-200 text-neutral-700 border-transparent")"
+                            @onclick='() => SelectPaymentMode("UPI")'>
+                        UPI
+                    </button>
+                    <button class="flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-colors border-2 @(selectedPaymentMode == "Card" ? "bg-primary/10 text-primary border-primary" : "bg-neutral-100 hover:bg-neutral-200 text-neutral-700 border-transparent")"
+                            @onclick='() => SelectPaymentMode("Card")'>
+                        Card
+                    </button>
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-sm font-medium text-neutral-500 mb-1">Package Details</label>
+                <div class="w-full rounded-lg text-neutral-800 bg-neutral-100 border border-neutral-300 p-3">
+                    @if (OrderStateService.SelectedBonus != null)
+                    {
+                        <p class="font-semibold text-neutral-800">
+                            Rs @OrderStateService.SelectedBonus.Amount Package
+                        </p>
+                        <p class="text-sm text-neutral-500 mt-1">
+                            @if (OrderStateService.SelectedBonus.Bonus_Amount > 0)
+                            {
+                                <span class="text-green-600 font-semibold">
+                                    Includes Rs @OrderStateService.SelectedBonus.Bonus_Amount bonus credit
+                                </span>
+                            }
+                            else
+                            {
+                                <span>Standard package</span>
+                            }
+                        </p>
+                    }
+                    else
+                    {
+                        <p class="font-semibold text-neutral-800">No package selected</p>
+                        <p class="text-sm text-neutral-500">Select a package from the options</p>
+                    }
+                </div>
+            </div>
+
+            <!-- Recharge For Options (Visible when no package selected) -->
+            @if (OrderStateService.SelectedBonus == null)
+            {
+                <div>
+                    <label class="block text-sm font-medium text-neutral-500 mb-1">Recharge For</label>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button class="flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-colors border-2 @(selectedRechargeAmount == 300 ? "bg-primary/10 text-primary border-primary" : "bg-neutral-100 hover:bg-neutral-200 text-neutral-700 border-transparent")"
+                                @onclick="() => SelectRechargeAmount(300)">
+                            Rs 300
+                        </button>
+                        <button class="flex items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-colors border-2 @(selectedRechargeAmount == 500 ? "bg-primary/10 text-primary border-primary" : "bg-neutral-100 hover:bg-neutral-200 text-neutral-700 border-transparent")"
+                                @onclick="() => SelectRechargeAmount(500)">
+                            Rs 500
+                        </button>
+                    </div>
+                </div>
+            }
+            
+            <div class="grid grid-cols-2 gap-4 pt-2">
+                <button class="flex items-center justify-center gap-2 rounded-lg px-4 py-3 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-semibold transition-colors">
+                    <span class="material-symbols-outlined">contactless</span>
+                    <span>Scan RFID</span>
+                </button>
+                <button class="flex items-center justify-center gap-2 rounded-lg px-4 py-3 bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-semibold transition-colors">
+                    <span class="material-symbols-outlined">qr_code_2</span>
+                    <span>QR Code</span>
+                </button>
+            </div>
+        </div>
+        
+        <hr class="border-neutral-200 my-6"/>
+        
+        <div class="flex-1">
+            <h3 class="text-neutral-800 text-lg font-bold leading-tight tracking-[-0.015em] mb-4">Order Summary</h3>
+            <div class="space-y-3">
+                @if (OrderStateService.SelectedBonus != null)
+                {
+                    <div class="flex justify-between items-center text-neutral-800">
+                        <div>
+                            <p class="font-medium">Rs @OrderStateService.SelectedBonus.Amount Package</p>
+                            <p class="text-sm text-neutral-500">Qty: 1</p>
+                        </div>
+                        <p class="font-medium">Rs @OrderStateService.SelectedBonus.Amount.00</p>
+                    </div>
+                }
+                else if (selectedRechargeAmount > 0)
+                {
+                    <div class="flex justify-between items-center text-neutral-800">
+                        <div>
+                            <p class="font-medium">Recharge Amount</p>
+                            <p class="text-sm text-neutral-500">Rs @selectedRechargeAmount</p>
+                        </div>
+                        <p class="font-medium">Rs @selectedRechargeAmount.00</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center text-neutral-500 py-4">
+                        No package or recharge selected
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    
+    <div class="p-6 bg-neutral-100 border-t border-neutral-200 mt-auto">
+        <div class="space-y-2 mb-6">
+            @if (OrderStateService.SelectedBonus != null || selectedRechargeAmount > 0)
+            {
+                var amount = OrderStateService.SelectedBonus?.Amount ?? selectedRechargeAmount;
+                var baseAmount = amount / 1.18m;
+                var taxAmount = baseAmount * 0.18m;
+                
+                <div class="flex justify-between text-neutral-700">
+                    <span>Base Amount</span>
+                    <span>Rs @baseAmount.ToString("0.00")</span>
+                </div>
+                <div class="flex justify-between text-neutral-700">
+                    <span>Tax (18%)</span>
+                    <span>Rs @taxAmount.ToString("0.00")</span>
+                </div>
+                @if (OrderStateService.SelectedBonus?.Bonus_Amount > 0)
+                {
+                    <div class="flex justify-between text-green-600 font-semibold">
+                        <span>Bonus Credit</span>
+                        <span>+ Rs @OrderStateService.SelectedBonus.Bonus_Amount.00</span>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(selectedPaymentMode))
+                {
+                    <div class="flex justify-between text-neutral-700 text-sm">
+                        <span>Payment Mode</span>
+                        <span class="font-semibold">@selectedPaymentMode</span>
+                    </div>
+                }
+                <div class="flex justify-between text-neutral-900 text-lg font-bold border-t border-neutral-300 pt-2">
+                    <span>Total Payable</span>
+                    <span>Rs @amount.00</span>
+                </div>
+            }
+            else
+            {
+                <div class="text-center text-neutral-500 py-4">
+                    Select a package or recharge to see total
+                </div>
+            }
+        </div>
+        <div class="flex flex-col gap-3">
+            <button class="w-full @(CanProcessPayment ? "bg-primary text-white hover:bg-primary/90" : "bg-gray-300 text-gray-500 cursor-not-allowed") font-bold py-3.5 rounded-lg transition-colors text-lg"
+                    disabled="@(!CanProcessPayment)"
+                    @onclick="ProcessPayment">
+                @if (isProcessingPayment)
+                {
+                    <span class="flex items-center justify-center">
+                        <span class="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></span>
+                        Processing...
+                    </span>
+                }
+                else
+                {
+                    <span>Process Payment</span>
+                }
+            </button>
+            <button class="w-full bg-transparent border border-neutral-400 text-neutral-700 font-semibold py-3 rounded-lg hover:bg-neutral-200 transition-colors"
+                    @onclick="ClearOrder"
+                    disabled="@isProcessingPayment">
+                Clear Order
+            </button>
+        </div>
+        
+        @if (!string.IsNullOrEmpty(paymentMessage))
+        {
+            <div class="mt-4 p-3 rounded-lg @(isPaymentSuccess ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800") text-sm">
+                @paymentMessage
+            </div>
+        }
+    </div>
+</aside>
+
+<style>
+    input {
+        padding: 10px !important;
+    }
+</style>
+
+@code {
+    private string customerRfid = "";
+    private string customerName = "";
+    private string customerEmail = "";
+    private string customerPhone = "";
+    private string customerDobString = "";
+    private DateTime? customerDob;
+    private string selectedPaymentMode = "";
+    private int selectedRechargeAmount = 0;
+    private ElementReference rfidInputRef;
+    private bool rfidValid = false;
+    private bool isProcessingPayment = false;
+    private string paymentMessage = "";
+    private bool isPaymentSuccess = false;
+    private string scanBuffer = "";
+    private DateTime lastKeyTime;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await rfidInputRef.FocusAsync();
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        OrderStateService.OnChange += StateHasChanged;
+    }
+
+    string GetRfidCss()
+    {
+        return rfidValid
+            ? "form-input w-full rounded-lg bg-green-100 border-green-500 text-neutral-800 pr-10"
+            : "form-input w-full rounded-lg bg-neutral-100 border-neutral-300 text-neutral-800 pr-10";
+    }
+
+    private async Task KeepFocusOnRfid(KeyboardEventArgs e)
+    {
+        await rfidInputRef.FocusAsync();
+    }
+
+    private async Task OnRfidChanged(ChangeEventArgs e)
+    {
+        string value = e.Value?.ToString() ?? "";
+        DateTime now = DateTime.Now;
+
+        if (value.Length > scanBuffer.Length)
+        {
+            char newChar = value.Last();
+            if (char.IsDigit(newChar))
+                scanBuffer += newChar;
+        }
+
+        lastKeyTime = now;
+        await Task.Delay(80);
+
+        if ((DateTime.Now - lastKeyTime).TotalMilliseconds > 70)
+        {
+            ProcessFullScan(scanBuffer);
+            scanBuffer = "";
+        }
+    }
+
+    private string ToSignedTwosComplementHex(string decimalString)
+    {
+        if (!long.TryParse(decimalString, out long value))
+            return "";
+
+        int signedValue = unchecked((int)value);
+        string hex = signedValue.ToString("X8");
+        return hex;
+    }
+
+    private void ProcessFullScan(string input)
+    {
+        if (long.TryParse(input, out long decimalValue))
+        {
+            // string hex = ToSignedTwosComplementHex(input);
+            string hex = long.Parse(input).ToString("X");
+
+            customerRfid = hex;
+            customerRfid = "{" + customerRfid + "}";
+            rfidValid = true;
+            StateHasChanged();
+        }
+    }
+
+    private void ClearRfid()
+    {
+        customerRfid = "";
+        rfidValid = false;
+        StateHasChanged();
+    }
+
+    private void SelectPaymentMode(string mode)
+    {
+        selectedPaymentMode = mode;
+        StateHasChanged();
+    }
+
+    private void SelectRechargeAmount(int amount)
+    {
+        selectedRechargeAmount = selectedRechargeAmount == amount ? 0 : amount;
+        StateHasChanged();
+    }
+
+    private async Task ProcessPayment()
+    {
+        if (!CanProcessPayment || isProcessingPayment) return;
+
+        isProcessingPayment = true;
+        paymentMessage = "";
+        isPaymentSuccess = false;
+        StateHasChanged();
+
+        try
+        {
+            // Get the package amount and bonus
+            var packageAmount = OrderStateService.SelectedBonus?.Amount ?? selectedRechargeAmount;
+            var bonusAmount = OrderStateService.SelectedBonus?.Bonus_Amount ?? 0;
+            var totalAmount = packageAmount + bonusAmount;
+
+            // Calculate GST (18%)
+            var baseAmount = packageAmount / 1.18m;
+            var gstAmount = baseAmount * 0.18m;
+
+            // Check if customer already exists
+            var existingCustomer = await CustomerRepository.GetByRfidAsync(customerRfid);
+            EsCustomer customer;
+            string formattedDob = customerDob?.ToString("dd-MMM-yyyy", System.Globalization.CultureInfo.InvariantCulture) ?? "";
+            if (existingCustomer != null)
+            {
+                // Update existing customer
+                existingCustomer.name = customerName;
+                existingCustomer.email = customerEmail;
+                existingCustomer.phone = customerPhone;
+                existingCustomer.dob = formattedDob;
+                existingCustomer.payment_mode = selectedPaymentMode;
+                existingCustomer.balance_main += totalAmount;
+                existingCustomer.updated_at_dt = DateTime.UtcNow;
+                existingCustomer.updated_by = "SYSTEM";
+
+                customer = await CustomerRepository.UpdateCustomerAsync(existingCustomer);
+                if (customer == null)
+                {
+                    throw new Exception("Failed to update customer");
+                }
+            }
+            else
+            {
+                // Create new customer
+                customer = new EsCustomer
+                {
+                    guid = Guid.NewGuid().ToString(),
+                    rfid = customerRfid,
+                    name = customerName,
+                    dob = formattedDob,
+                    email = customerEmail,
+                    phone = customerPhone,
+                    payment_mode = selectedPaymentMode,
+                    balance_main = totalAmount,
+                    balance_bonus = 0,
+                    status = "ACTIVE",
+                    created_at = DateTime.UtcNow,
+                    is_first_punch_done = 0,
+                    is_free_time = "NO",
+                    total_token = 0,
+                    location = "",
+                    card_sno = 0,
+                    is_vip = 0,
+                    center_code = "CENTER_1",
+                    updated_at_dt = DateTime.UtcNow,
+                    updated_by = "SYSTEM"
+                };
+
+                customer = await CustomerRepository.CreateCustomerAsync(customer);
+                if (customer == null)
+                {
+                    throw new Exception("Failed to create customer");
+                }
+            }
+
+            // Create billing record
+            var billing = new EsBilling
+            {
+                guid = Guid.NewGuid().ToString(),
+                rfid = customerRfid,
+                setup_id = 1,
+                customer_id = customer.id,
+                pre_amount = existingCustomer?.balance_main ?? 0,
+                amount = packageAmount,
+                post_amount = customer.balance_main,
+                created_at = DateTime.UtcNow,
+                log_device_ip = "127.0.0.1",
+                log_game = $"Package Recharge - Rs {packageAmount}",
+                name = customerName,
+                email = customerEmail,
+                phone = customerPhone,
+                is_deleted = "NO",
+                customer_main_amount_used = packageAmount,
+                customer_bonus_amount_used = 0,
+                center_code = "CENTER_1"
+            };
+
+            var billingSuccess = await BillingRepository.CreateRechargeBillingAsync(billing, bonusAmount);
+            if (!billingSuccess)
+            {
+                throw new Exception("Failed to create billing record");
+            }
+
+            // Create payment record
+            var payment = new EsPayment
+            {
+                customer_id = customer.id,
+                rfid = customerRfid,
+                guid = Guid.NewGuid().ToString(),
+                pre_amount = existingCustomer?.balance_main ?? 0,
+                recharge_amount = packageAmount,
+                discount_percent_on_bill = 0,
+                discount_amount_on_bill = 0,
+                collect_amount_from_customer = packageAmount,
+                bonus_amount = bonusAmount,
+                main_amount = packageAmount,
+                post_amount = customer.balance_main,
+                created_at = DateTime.UtcNow,
+                name = customerName,
+                email = customerEmail,
+                phone = customerPhone,
+                is_deleted = "NO",
+                payment_mode = selectedPaymentMode,
+                user = "SYSTEM",
+                gst_amount = gstAmount,
+                is_return_as_full = 0,
+                wa_response = "",
+                center_code = "CENTER_1",
+                updated_at_dt = DateTime.UtcNow,
+                updated_by = "SYSTEM"
+            };
+
+            var paymentSuccess = await PaymentRepository.CreatePaymentAsync(payment);
+            if (!paymentSuccess)
+            {
+                throw new Exception("Failed to create payment record");
+            }
+
+            // Success
+            isPaymentSuccess = true;
+            paymentMessage = $"Payment successful! Customer balance updated to Rs {customer.balance_main}";
+
+            // Clear order after successful payment
+            await Task.Delay(2000);
+            ClearOrder();
+        }
+        catch (Exception ex)
+        {
+            isPaymentSuccess = false;
+            paymentMessage = $"Payment failed: {ex.Message}";
+            Console.WriteLine($"Payment error: {ex.Message}");
+        }
+        finally
+        {
+            isProcessingPayment = false;
+            StateHasChanged();
+        }
+    }
+    private void ClearOrder()
+    {
+        OrderStateService.ClearSelection();
+        customerRfid = "";
+        customerName = "";
+        customerEmail = "";
+        customerPhone = "";
+        customerDobString = "";
+        selectedPaymentMode = "";
+        selectedRechargeAmount = 0;
+        rfidValid = false;
+        paymentMessage = "";
+        isPaymentSuccess = false;
+        StateHasChanged();
+    }
+
+    private bool CanProcessPayment => 
+        !string.IsNullOrEmpty(customerRfid?.Trim()) && 
+        !string.IsNullOrEmpty(customerName?.Trim()) && 
+        (OrderStateService.SelectedBonus != null || selectedRechargeAmount > 0) &&
+        !isProcessingPayment;
+
+    public void Dispose()
+    {
+        OrderStateService.OnChange -= StateHasChanged;
+    }
+}

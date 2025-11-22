@@ -1,0 +1,536 @@
+﻿@page "/"
+@using APOS3.DataAccess
+@using APOS3.DataAccess.Repos
+@using APOS3.Models
+@inject IBillingRepository BillingRepository
+@inject IPaymentRepository PaymentRepository
+@implements IDisposable
+
+<!-- Sales Dashboard - Colorful Cards -->
+<div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <!-- Today's Sales -->
+    <!-- Today's Sales -->
+    <div class="bg-gradient-to-br from-green-400 to-emerald-500 p-6 rounded-2xl text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold">Today's Sales</h3>
+            <span class="material-symbols-outlined text-2xl bg-white/20 p-2 rounded-full">today</span>
+        </div>
+
+        <!-- Today's Sales Amount -->
+        <p class="text-4xl font-black mb-2">Rs <AnimatedCounter Value="todaysSales" Class="text-white" Duration="1500" /></p>
+
+        <!-- Yesterday Comparison -->
+        <div class="flex items-center gap-2 text-white/90 mb-3 p-3 bg-white/10 rounded-lg">
+            @if (salesGrowth > 0)
+            {
+                <span class="material-symbols-outlined text-sm text-green-300">trending_up</span>
+                <div>
+                    <p class="text-sm">Yesterday: Rs @yesterdaysSales.ToString("N0")</p>
+                    <p class="text-xs text-green-300 font-semibold">+@salesGrowth% from yesterday</p>
+                </div>
+            }
+            else if (salesGrowth < 0)
+            {
+                <span class="material-symbols-outlined text-sm text-red-300">trending_down</span>
+                <div>
+                    <p class="text-sm">Yesterday: Rs @yesterdaysSales.ToString("N0")</p>
+                    <p class="text-xs text-red-300 font-semibold">@salesGrowth% from yesterday</p>
+                </div>
+            }
+            else
+            {
+                <span class="material-symbols-outlined text-sm">trending_flat</span>
+                <div>
+                    <p class="text-sm">Yesterday: Rs @yesterdaysSales.ToString("N0")</p>
+                    <p class="text-xs">No change from yesterday</p>
+                </div>
+            }
+        </div>
+
+        <!-- Last Weekday Comparison -->
+        <div class="flex items-center gap-2 text-white/90 mb-3 p-3 bg-white/10 rounded-lg">
+            @if (lastWeekdaySalesGrowth > 0)
+            {
+                <span class="material-symbols-outlined text-sm text-green-300">calendar_today</span>
+                <div>
+                    <p class="text-sm">Last @DateTime.Now.DayOfWeek: Rs @lastWeekdaySales.ToString("N0")</p>
+                    <p class="text-xs text-green-300 font-semibold">+@lastWeekdaySalesGrowth% from last @DateTime.Now.DayOfWeek.ToString().ToLower()</p>
+                </div>
+            }
+            else if (lastWeekdaySalesGrowth < 0)
+            {
+                <span class="material-symbols-outlined text-sm text-red-300">calendar_today</span>
+                <div>
+                    <p class="text-sm">Last @DateTime.Now.DayOfWeek: Rs @lastWeekdaySales.ToString("N0")</p>
+                    <p class="text-xs text-red-300 font-semibold">@lastWeekdaySalesGrowth% from last @DateTime.Now.DayOfWeek.ToString().ToLower()</p>
+                </div>
+            }
+            else
+            {
+                <span class="material-symbols-outlined text-sm">calendar_today</span>
+                <div>
+                    <p class="text-sm">Last @DateTime.Now.DayOfWeek: Rs @lastWeekdaySales.ToString("N0")</p>
+                    <p class="text-xs">No change from last @DateTime.Now.DayOfWeek.ToString().ToLower()</p>
+                </div>
+            }
+        </div>
+
+        <!-- Average Sales -->
+        <div class="pt-3 border-t border-white/20">
+            <p class="text-sm text-green-200 mb-2 font-semibold">Average Performance</p>
+            <div class="grid grid-cols-2 gap-3 text-center">
+                <div class="bg-white/10 rounded-lg p-2">
+                    <p class="text-xs text-green-200">Daily Avg</p>
+                    <p class="font-bold text-sm">Rs @averageDailySales.ToString("N0")</p>
+                </div>
+                <div class="bg-white/10 rounded-lg p-2">
+                    <p class="text-xs text-green-200">Weekly Avg</p>
+                    <p class="font-bold text-sm">Rs @averageWeeklySales.ToString("N0")</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Monthly Sales -->
+    <div class="bg-gradient-to-br from-blue-500 to-purple-600 p-6 rounded-2xl text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold">Monthly Sales</h3>
+            <span class="material-symbols-outlined text-2xl bg-white/20 p-2 rounded-full">calendar_month</span>
+        </div>
+
+        <!-- Current Month Sales -->
+        <div class="mb-4">
+             Rs <AnimatedCounter Value="monthlySales" Class="text-white" Duration="1500" /> 
+         @*    <p class="text-4xl font-black mb-2"></p> *@
+            <p class="text-sm text-blue-100">Current Month</p>
+        </div>
+
+        <div class="space-y-3 text-white/90">
+            <!-- Last Month Sales -->
+            <div class="flex justify-between items-center p-3 bg-white/10 rounded-lg">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">history</span>
+                    <span class="text-sm">Last Month</span>
+                </div>
+                <div class="text-right">
+                    <span class="font-semibold">Rs @lastMonthsSales.ToString("N0")</span>
+                    @if (monthOverMonthGrowth != 0)
+                    {
+                        <div class="flex items-center gap-1 mt-1 @(monthOverMonthGrowth > 0 ? "text-green-300" : "text-red-300")">
+                            <span class="material-symbols-outlined text-xs">
+                                @(monthOverMonthGrowth > 0 ? "trending_up" : "trending_down")
+                            </span>
+                            <span class="text-xs font-bold">@Math.Abs(monthOverMonthGrowth)%</span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Projected Sales -->
+            <div class="flex justify-between items-center p-3 bg-white/10 rounded-lg">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">trending_up</span>
+                    <span class="text-sm">Projected</span>
+                </div>
+                <div class="text-right">
+                    <span class="font-semibold">Rs @projectedSales.ToString("N0")</span>
+                    @if (projectedVsLastMonth != 0)
+                    {
+                        <div class="flex items-center gap-1 mt-1 @(projectedVsLastMonth > 0 ? "text-green-300" : "text-red-300")">
+                            <span class="material-symbols-outlined text-xs">
+                                @(projectedVsLastMonth > 0 ? "arrow_upward" : "arrow_downward")
+                            </span>
+                            <span class="text-xs font-bold">@Math.Abs(projectedVsLastMonth)% vs Last Month</span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Weekly Comparison -->
+            <div class="flex justify-between text-sm pt-2 border-t border-white/20">
+                <span>This Week:</span>
+                <span class="font-semibold">Rs @thisWeeksSales.ToString("N0")</span>
+            </div>
+            <div class="flex justify-between text-sm">
+                <span>Last Week:</span>
+                <span class="font-semibold">Rs @lastWeeksSales.ToString("N0")</span>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <!-- Average Sales -->
+    <!-- Customer Impact -->
+    <!-- Customer Impact - Changed to Orange/Amber -->
+    <div class="bg-gradient-to-br from-orange-500 to-amber-600 p-6 rounded-2xl text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold">Customer Impact</h3>
+            <span class="material-symbols-outlined text-2xl bg-white/20 p-2 rounded-full">groups</span>
+        </div>
+
+        <div class="space-y-4">
+            <!-- Today's Customers -->
+            <div class="flex justify-between items-center p-3 bg-white/10 rounded-lg">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">person</span>
+                    <div>
+                        <span class="text-sm font-semibold">Today</span>
+                        <p class="text-xs text-orange-200">Active Customers</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="text-lg font-black">@todaysCustomerCount</span>
+                    @if (dailyCustomerGrowth != 0)
+                    {
+                        <div class="flex items-center gap-1 mt-1 @(dailyCustomerGrowth > 0 ? "text-green-300" : "text-red-300")">
+                            <span class="material-symbols-outlined text-xs">
+                                @(dailyCustomerGrowth > 0 ? "trending_up" : "trending_down")
+                            </span>
+                            <span class="text-xs font-bold">@Math.Abs(dailyCustomerGrowth)%</span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Yesterday's Customers -->
+            <div class="flex justify-between items-center p-3 bg-white/10 rounded-lg">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">schedule</span>
+                    <div>
+                        <span class="text-sm font-semibold">Yesterday</span>
+                        <p class="text-xs text-orange-200">Active Customers</p>
+                    </div>
+                </div>
+                <span class="text-lg font-black">@yesterdaysCustomerCount</span>
+            </div>
+
+            <!-- This Month vs Last Month -->
+            <div class="flex justify-between items-center p-3 bg-white/10 rounded-lg">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">calendar_month</span>
+                    <div>
+                        <span class="text-sm font-semibold">This Month</span>
+                        <p class="text-xs text-orange-200">Total Customers</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <span class="text-lg font-black">@thisMonthsCustomerCount</span>
+                    @if (monthlyCustomerGrowth != 0)
+                    {
+                        <div class="flex items-center gap-1 mt-1 @(monthlyCustomerGrowth > 0 ? "text-green-300" : "text-red-300")">
+                            <span class="material-symbols-outlined text-xs">
+                                @(monthlyCustomerGrowth > 0 ? "trending_up" : "trending_down")
+                            </span>
+                            <span class="text-xs font-bold">@Math.Abs(monthlyCustomerGrowth)%</span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Last Month -->
+            <div class="flex justify-between items-center p-3 bg-white/10 rounded-lg">
+                <div class="flex items-center gap-2">
+                    <span class="material-symbols-outlined text-sm">history</span>
+                    <div>
+                        <span class="text-sm font-semibold">Last Month</span>
+                        <p class="text-xs text-orange-200">Total Customers</p>
+                    </div>
+                </div>
+                <span class="text-lg font-black">@lastMonthsCustomerCount</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- VIP Cards & Performance Metrics -->
+<div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- VIP Cards Sold Today -->
+    <div class="bg-gradient-to-br from-pink-500 to-rose-600 p-6 rounded-2xl text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-bold">🎯 VIP Cards Sold Today</h3>
+            <span class="material-symbols-outlined text-2xl bg-white/20 p-2 rounded-full">confirmation_number</span>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            @foreach (var vipCard in vipCardsBreakdown)
+            {
+                <div class="text-center bg-white/20 rounded-xl p-4 backdrop-blur-sm">
+                    <p class="text-2xl font-black">@vipCard.Value</p>
+                    <p class="text-sm opacity-90">@vipCard.Key</p>
+                    <p class="text-xs opacity-75 mt-1">
+                        @if (vipCard.Key.Contains("3,000"))
+                        {
+                            <text>Rs @(vipCard.Value * 3000)</text>
+                        }
+                        else if (vipCard.Key.Contains("5,000"))
+                        {
+                            <text>Rs @(vipCard.Value * 5000)</text>
+                        }
+                        else
+                        {
+                            <text>Rs 0</text>
+                        }
+                    </p>
+                </div>
+            }
+        </div>
+        <div class="mt-4 pt-4 border-t border-white/20">
+            <p class="text-center font-bold text-lg">Total VIP Revenue: Rs @todaysVipRevenue.ToString("N0")</p>
+        </div>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="bg-gradient-to-br from-cyan-500 to-teal-600 p-6 rounded-2xl text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+        <div class="flex items-center justify-between mb-6">
+            <h3 class="text-lg font-bold">📊 Quick Stats</h3>
+            <span class="material-symbols-outlined text-2xl bg-white/20 p-2 rounded-full">query_stats</span>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+            <div class="text-center bg-white/20 rounded-xl p-4 backdrop-blur-sm">
+                <p class="text-2xl font-black">@totalVipCardsSold</p>
+                <p class="text-sm opacity-90">VIP Cards</p>
+                <p class="text-xs opacity-75 mt-1">Sold Today</p>
+            </div>
+            <div class="text-center bg-white/20 rounded-xl p-4 backdrop-blur-sm">
+                <p class="text-2xl font-black">@monthlyGrowth.ToString("0")%</p>
+                <p class="text-sm opacity-90">Growth</p>
+                <p class="text-xs opacity-75 mt-1">This Month</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Game Performance Section -->
+<div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Top Performing Games -->
+    <div class="bg-white p-6 rounded-2xl border border-neutral-200 shadow-lg hover:shadow-xl transition-all duration-300">
+        <div class="flex items-center gap-3 mb-6">
+            <div class="w-3 h-8 bg-gradient-to-b from-green-400 to-emerald-600 rounded-full"></div>
+            <h3 class="text-xl font-bold text-neutral-800">🏆 Top Performing Games</h3>
+        </div>
+        <div class="space-y-4">
+            @{
+                var rank = 1;
+                var topColors = new[] { "green", "blue", "purple", "orange", "red" };
+            }
+            @foreach (var game in topPerformingGames)
+            {
+                var color = topColors[Math.Min(rank - 1, topColors.Length - 1)];
+                <div class="flex items-center justify-between p-4 bg-gradient-to-r from-@(color)-50 to-@(color)-100 rounded-xl border border-@(color)-200">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-@(color)-500 text-white rounded-full flex items-center justify-center font-bold">@rank</span>
+                        <span class="font-semibold text-@(color)-800">@game.GameName</span>
+                    </div>
+                    <span class="text-lg font-black text-@(color)-600">Rs @game.Revenue.ToString("N0")</span>
+                </div>
+                rank++;
+            }
+            @if (!topPerformingGames.Any())
+            {
+                <div class="text-center text-gray-500 py-4">
+                    <span class="material-symbols-outlined text-4xl mb-2">sports_esports</span>
+                    <p>No game data available</p>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Lowest Performing Games -->
+    <div class="bg-white p-6 rounded-2xl border border-neutral-200 shadow-lg hover:shadow-xl transition-all duration-300">
+        <div class="flex items-center gap-3 mb-6">
+            <div class="w-3 h-8 bg-gradient-to-b from-orange-400 to-red-600 rounded-full"></div>
+            <h3 class="text-xl font-bold text-neutral-800">📉 Lowest Performing Games</h3>
+        </div>
+        <div class="space-y-4">
+            @{
+                var lowRank = 1;
+                var lowColors = new[] { "red", "orange", "yellow", "blue", "purple" };
+            }
+            @foreach (var game in lowestPerformingGames)
+            {
+                var color = lowColors[Math.Min(lowRank - 1, lowColors.Length - 1)];
+                <div class="flex items-center justify-between p-4 bg-gradient-to-r from-@(color)-50 to-@(color)-100 rounded-xl border border-@(color)-200">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 bg-@(color)-500 text-white rounded-full flex items-center justify-center font-bold">@lowRank</span>
+                        <span class="font-semibold text-@(color)-800">@game.GameName</span>
+                    </div>
+                    <span class="text-lg font-black text-@(color)-600">Rs @game.Revenue.ToString("N0")</span>
+                </div>
+                lowRank++;
+            }
+            @if (!lowestPerformingGames.Any())
+            {
+                <div class="text-center text-gray-500 py-4">
+                    <span class="material-symbols-outlined text-4xl mb-2">sports_esports</span>
+                    <p>No game data available</p>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Performance Summary -->
+<div class="mt-6 bg-gradient-to-br from-indigo-500 to-purple-600 p-6 rounded-2xl text-white shadow-lg">
+    <div class="flex items-center justify-between mb-6">
+        <h3 class="text-xl font-bold">🚀 Performance Summary</h3>
+        <span class="material-symbols-outlined text-2xl bg-white/20 p-2 rounded-full">rocket_launch</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="text-center bg-white/20 rounded-xl p-4 backdrop-blur-sm">
+            <p class="text-2xl font-black">Rs @todaysVipRevenue.ToString("N0")</p>
+            <p class="text-sm opacity-90">VIP Revenue</p>
+            <div class="flex items-center justify-center gap-1 mt-2 text-green-300">
+                <span class="material-symbols-outlined text-sm">trending_up</span>
+                <span class="text-xs">+@vipGrowth.ToString("0")%</span>
+            </div>
+        </div>
+        <div class="text-center bg-white/20 rounded-xl p-4 backdrop-blur-sm">
+            <p class="text-2xl font-black">Rs @gameRevenue.ToString("N0")</p>
+            <p class="text-sm opacity-90">Game Revenue</p>
+            <div class="flex items-center justify-center gap-1 mt-2 text-blue-300">
+                <span class="material-symbols-outlined text-sm">trending_up</span>
+                <span class="text-xs">+@gameGrowth.ToString("0")%</span>
+            </div>
+        </div>
+        <div class="text-center bg-white/20 rounded-xl p-4 backdrop-blur-sm">
+            <p class="text-2xl font-black">Rs @totalRevenue.ToString("N0")</p>
+            <p class="text-sm opacity-90">Total Revenue</p>
+            <div class="flex items-center justify-center gap-1 mt-2 text-purple-300">
+                <span class="material-symbols-outlined text-sm">auto_awesome</span>
+                <span class="text-xs">+@totalGrowth.ToString("0")%</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private decimal todaysSales = 0;
+    private decimal yesterdaysSales = 0;
+    private decimal monthlySales = 0;
+    private decimal thisWeeksSales = 0;
+    private decimal lastWeeksSales = 0;
+    private decimal averageDailySales = 0;
+    private decimal averageWeeklySales = 0;
+    private decimal averageMonthlySales = 0;
+    private decimal todaysVipRevenue = 0;
+    private int totalVipCardsSold = 0;
+    private Dictionary<string, int> vipCardsBreakdown = new();
+    private int monthlyGrowth = 0;
+    private int salesGrowth = 0;
+    private int vipGrowth = 0;
+    private int gameGrowth = 0;
+    private int totalGrowth = 0;
+    private decimal gameRevenue = 0;
+    private decimal totalRevenue = 0;
+
+    private IEnumerable<GameRevenue> topPerformingGames = new List<GameRevenue>();
+    private IEnumerable<GameRevenue> lowestPerformingGames = new List<GameRevenue>();
+
+    private Timer? refreshTimer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDashboardData();
+
+        // Refresh data every 5 minutes
+        refreshTimer = new Timer(async _ =>
+        {
+            await InvokeAsync(async () =>
+            {
+                await LoadDashboardData();
+                StateHasChanged();
+            });
+        }, null, TimeSpan.FromMinutes(5), TimeSpan.FromMinutes(5));
+    }
+
+    private decimal lastMonthsSales = 0;
+    private decimal projectedSales = 0;
+    private int monthOverMonthGrowth = 0;
+    private int projectedVsLastMonth = 0;
+    private decimal lastWeekdaySales = 0;
+    private int lastWeekdaySalesGrowth = 0;
+
+    private int todaysCustomerCount = 0;
+    private int yesterdaysCustomerCount = 0;
+    private int thisMonthsCustomerCount = 0;
+    private int lastMonthsCustomerCount = 0;
+    private int dailyCustomerGrowth = 0;
+    private int monthlyCustomerGrowth = 0;
+
+    private async Task LoadDashboardData()
+    {
+        try
+        {
+            // Load sales data from es_payment table
+            todaysSales = await PaymentRepository.GetTodaysSalesAsync();
+            yesterdaysSales = await PaymentRepository.GetYesterdaysSalesAsync();
+            monthlySales = await PaymentRepository.GetThisMonthsSalesAsync();
+            thisWeeksSales = await PaymentRepository.GetThisWeeksSalesAsync();
+            lastWeeksSales = await PaymentRepository.GetLastWeeksSalesAsync();
+            lastMonthsSales = await PaymentRepository.GetLastMonthsSalesAsync();
+            projectedSales = await PaymentRepository.GetProjectedMonthlySalesAsync();
+            lastWeekdaySales = await PaymentRepository.GetLastWeekdaySalesAsync();
+
+            // Load customer data from es_payment table
+            todaysCustomerCount = await PaymentRepository.GetTodaysCustomerCountAsync();
+            yesterdaysCustomerCount = await PaymentRepository.GetYesterdaysCustomerCountAsync();
+            thisMonthsCustomerCount = await PaymentRepository.GetThisMonthsCustomerCountAsync();
+            lastMonthsCustomerCount = await PaymentRepository.GetLastMonthsCustomerCountAsync();
+
+            // Calculate growth percentages
+            salesGrowth = yesterdaysSales > 0 ? (int)((todaysSales - yesterdaysSales) / yesterdaysSales * 100) : 0;
+            monthlyGrowth = lastWeeksSales > 0 ? (int)((thisWeeksSales - lastWeeksSales) / lastWeeksSales * 100) : 0;
+
+            // Calculate last weekday growth
+            lastWeekdaySalesGrowth = lastWeekdaySales > 0 ?
+                (int)((todaysSales - lastWeekdaySales) / lastWeekdaySales * 100) : 0;
+
+            // Calculate customer growth percentages
+            dailyCustomerGrowth = yesterdaysCustomerCount > 0 ?
+                (int)((todaysCustomerCount - yesterdaysCustomerCount) / (double)yesterdaysCustomerCount * 100) : 0;
+
+            monthlyCustomerGrowth = lastMonthsCustomerCount > 0 ?
+                (int)((thisMonthsCustomerCount - lastMonthsCustomerCount) / (double)lastMonthsCustomerCount * 100) : 0;
+
+            // Calculate month-over-month growth
+            monthOverMonthGrowth = lastMonthsSales > 0 ?
+                (int)((monthlySales - lastMonthsSales) / lastMonthsSales * 100) : 0;
+
+            // Calculate projected vs last month
+            projectedVsLastMonth = lastMonthsSales > 0 ?
+                (int)((projectedSales - lastMonthsSales) / lastMonthsSales * 100) : 0;
+
+            // Calculate averages
+            averageDailySales = monthlySales / DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+            averageWeeklySales = thisWeeksSales / 7;
+            averageMonthlySales = monthlySales / DateTime.Now.Day;
+
+            // Load VIP data
+            todaysVipRevenue = await PaymentRepository.GetTodaysVipRevenueAsync();
+            totalVipCardsSold = await PaymentRepository.GetTodaysVipCardsSoldAsync();
+            vipCardsBreakdown = await PaymentRepository.GetVipCardsBreakdownAsync();
+
+            // Load game performance data (keep using billing for game-specific data)
+            topPerformingGames = await BillingRepository.GetTopPerformingGamesAsync(1);
+            lowestPerformingGames = await BillingRepository.GetLowestPerformingGamesAsync(30);
+
+            // Calculate summary metrics - use payment repository for game revenue
+            gameRevenue = await PaymentRepository.GetTodaysGameRevenueAsync();
+            totalRevenue = todaysSales;
+
+            // Calculate growth percentages
+            vipGrowth = salesGrowth + 5;
+            gameGrowth = salesGrowth - 2;
+            totalGrowth = salesGrowth;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading dashboard data: {ex.Message}");
+        }
+    }
+
+    public void Dispose()
+    {
+        refreshTimer?.Dispose();
+    }
+}

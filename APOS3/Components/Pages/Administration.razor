@@ -1,0 +1,206 @@
+﻿@page "/administration"
+@using Microsoft.AspNetCore.Components
+@inject NavigationManager NavigationManager
+
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50/30 p-6">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <div class="flex flex-col sm:flex-row justify-between gap-4 items-start">
+                <div class="flex items-center gap-4">
+                    <div class="p-3 bg-white rounded-2xl shadow-sm border border-gray-100">
+                        <span class="material-symbols-outlined text-3xl text-blue-600">admin_panel_settings</span>
+                    </div>
+                    <div>
+                        <h1 class="text-4xl font-bold bg-gradient-to-r from-gray-900 to-blue-800 bg-clip-text text-transparent">
+                            Administration
+                        </h1>
+                        <p class="text-gray-600 mt-2 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-lg">settings</span>
+                            Manage your gaming center operations and configurations
+                        </p>
+                    </div>
+                </div>
+
+                <button @onclick="GoBack"
+                        class="flex items-center gap-3 rounded-2xl px-6 py-3 bg-white text-gray-700 border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-300 shadow-sm hover:shadow-md">
+                    <span class="material-symbols-outlined">arrow_back</span>
+                    <span class="text-sm font-semibold">Back to Dashboard</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Administration Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Manage Game Group Card -->
+            <div class="bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group"
+                 @onclick='() => NavigateTo("manage-game")'>
+                <div class="flex flex-col items-center text-center text-white">
+                    <div class="p-4 bg-white/20 rounded-2xl mb-4 group-hover:bg-white/30 transition-colors">
+                        <span class="material-symbols-outlined text-3xl">casino</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Manage Game </h3>
+                    <p class="text-white/80 text-sm">Organize and categorize games</p>
+                </div>
+            </div>
+
+            <!-- Manage Device Card -->
+            <div class="bg-gradient-to-br from-blue-500 to-cyan-600 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group"
+                 @onclick='() => NavigateTo("manage-device")'>
+                <div class="flex flex-col items-center text-center text-white">
+                    <div class="p-4 bg-white/20 rounded-2xl mb-4 group-hover:bg-white/30 transition-colors">
+                        <span class="material-symbols-outlined text-3xl">devices</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Manage Device</h3>
+                    <p class="text-white/80 text-sm">Configure gaming devices</p>
+                </div>
+            </div>
+
+            <!-- Manage Device Setup Card -->
+            <div class="bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group"
+                 @onclick='() => NavigateTo("manage-device-setup")'>
+                <div class="flex flex-col items-center text-center text-white">
+                    <div class="p-4 bg-white/20 rounded-2xl mb-4 group-hover:bg-white/30 transition-colors">
+                        <span class="material-symbols-outlined text-3xl">settings_input_component</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Manage Device Setup</h3>
+                    <p class="text-white/80 text-sm">Device configurations</p>
+                </div>
+            </div>
+
+            <!-- Game Price Scheduler Card -->
+            <div class="bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group"
+                 @onclick='() => NavigateTo("game-price-scheduler")'>
+                <div class="flex flex-col items-center text-center text-white">
+                    <div class="p-4 bg-white/20 rounded-2xl mb-4 group-hover:bg-white/30 transition-colors">
+                        <span class="material-symbols-outlined text-3xl">schedule</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Game Price Scheduler</h3>
+                    <p class="text-white/80 text-sm">Dynamic pricing schedules</p>
+                </div>
+            </div>
+
+            <!-- Happy Hour Price Scheduler Card -->
+            <div class="bg-gradient-to-br from-yellow-500 to-amber-600 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group"
+                 @onclick='() => NavigateTo("happy-hour-scheduler")'>
+                <div class="flex flex-col items-center text-center text-white">
+                    <div class="p-4 bg-white/20 rounded-2xl mb-4 group-hover:bg-white/30 transition-colors">
+                        <span class="material-symbols-outlined text-3xl">celebration</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Happy Hour Scheduler</h3>
+                    <p class="text-white/80 text-sm">Special pricing periods</p>
+                </div>
+            </div>
+
+            <!-- Allowed Game Bonuses Card -->
+            <div class="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group"
+                 @onclick='() => NavigateTo("allowed-game-bonuses")'>
+                <div class="flex flex-col items-center text-center text-white">
+                    <div class="p-4 bg-white/20 rounded-2xl mb-4 group-hover:bg-white/30 transition-colors">
+                        <span class="material-symbols-outlined text-3xl">card_giftcard</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Allowed Game Bonuses</h3>
+                    <p class="text-white/80 text-sm">Bonus configurations</p>
+                </div>
+            </div>
+@* 
+            <!-- Manage Packages Card -->
+            <div class="bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group"
+                 @onclick='() => NavigateTo("manage-packages")'>
+                <div class="flex flex-col items-center text-center text-white">
+                    <div class="p-4 bg-white/20 rounded-2xl mb-4 group-hover:bg-white/30 transition-colors">
+                        <span class="material-symbols-outlined text-3xl">inventory_2</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Manage Packages</h3>
+                    <p class="text-white/80 text-sm">Package configurations</p>
+                </div>
+            </div> *@
+
+            <!-- Manage Bonus Card -->
+            <div class="bg-gradient-to-br from-teal-500 to-cyan-600 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group"
+                 @onclick='() => NavigateTo("manage-bonus")'>
+                <div class="flex flex-col items-center text-center text-white">
+                    <div class="p-4 bg-white/20 rounded-2xl mb-4 group-hover:bg-white/30 transition-colors">
+                        <span class="material-symbols-outlined text-3xl">loyalty</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Manage Bonus</h3>
+                    <p class="text-white/80 text-sm">Bonus programs</p>
+                </div>
+            </div>
+
+            <!-- Manage Users Card -->
+            <div class="bg-gradient-to-br from-gray-600 to-gray-800 rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105 cursor-pointer group"
+                 @onclick='() => NavigateTo("manage-users")'>
+                <div class="flex flex-col items-center text-center text-white">
+                    <div class="p-4 bg-white/20 rounded-2xl mb-4 group-hover:bg-white/30 transition-colors">
+                        <span class="material-symbols-outlined text-3xl">manage_accounts</span>
+                    </div>
+                    <h3 class="text-lg font-bold mb-2">Manage Users</h3>
+                    <p class="text-white/80 text-sm">User accounts & permissions</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Stats Section -->
+        <div class="mt-12 bg-white rounded-2xl border border-gray-200/80 p-6 shadow-lg">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="material-symbols-outlined text-blue-500 text-2xl">insights</span>
+                <h3 class="text-2xl font-bold text-gray-900">Quick Overview</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="flex items-center gap-4 p-4 bg-blue-50 rounded-xl border border-blue-200">
+                    <div class="p-3 bg-blue-100 rounded-lg">
+                        <span class="material-symbols-outlined text-blue-600">devices</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-blue-700">Active Devices</p>
+                        <p class="text-2xl font-bold text-blue-900">24</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-4 p-4 bg-green-50 rounded-xl border border-green-200">
+                    <div class="p-3 bg-green-100 rounded-lg">
+                        <span class="material-symbols-outlined text-green-600">casino</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-green-700">Games Available</p>
+                        <p class="text-2xl font-bold text-green-900">18</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-4 p-4 bg-purple-50 rounded-xl border border-purple-200">
+                    <div class="p-3 bg-purple-100 rounded-lg">
+                        <span class="material-symbols-outlined text-purple-600">group</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-purple-700">System Users</p>
+                        <p class="text-2xl font-bold text-purple-900">8</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center gap-4 p-4 bg-orange-50 rounded-xl border border-orange-200">
+                    <div class="p-3 bg-orange-100 rounded-lg">
+                        <span class="material-symbols-outlined text-orange-600">card_giftcard</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-semibold text-orange-700">Active Packages</p>
+                        <p class="text-2xl font-bold text-orange-900">12</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private void NavigateTo(string route)
+    {
+        NavigationManager.NavigateTo($"/administration/{route}");
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}

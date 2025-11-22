@@ -1,0 +1,22 @@
+﻿@page "/test"
+
+<h1 class="text-3xl font-bold text-primary">Test Page</h1>
+<p class="text-neutral-700">If you can see this, the basic setup is working.</p>
+
+<button class="bg-primary text-white px-4 py-2 rounded-lg mt-4" @onclick="ShowMessage">
+    Click me to test
+</button>
+
+@if (message != null)
+{
+    <p class="mt-4 text-green-600">@message</p>
+}
+
+@code {
+    private string? message;
+
+    private void ShowMessage()
+    {
+        message = "Blazor is working!";
+    }
+}

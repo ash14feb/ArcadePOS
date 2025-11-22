@@ -1,0 +1,604 @@
+﻿@page "/reports/customer"
+@using Microsoft.AspNetCore.Components
+@using APOS3.DataAccess.Repos
+@using APOS3.DataAccess
+@using APOS3.Models
+@inject NavigationManager NavigationManager
+@inject IPaymentRepository PaymentRepository
+
+<div class="min-h-screen bg-gradient-to-br from-gray-50 to-purple-50/30 p-6">
+    <div class="max-w-7xl mx-auto">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <div class="flex flex-wrap justify-between gap-4 items-start mb-6">
+                <div class="flex items-center gap-4">
+                    <div class="p-3 bg-white rounded-2xl shadow-sm border border-gray-100">
+                        <span class="material-symbols-outlined text-3xl text-purple-600">group</span>
+                    </div>
+                    <div>
+                        <h1 class="text-4xl font-bold bg-gradient-to-r from-gray-900 to-purple-800 bg-clip-text text-transparent">
+                            Customer Analytics
+                        </h1>
+                        <p class="text-gray-600 mt-2 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-lg">diversity</span>
+                            Comprehensive customer insights and activity reports
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button @onclick="ExportToExcel"
+                            class="flex items-center gap-3 rounded-2xl px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105">
+                        <span class="material-symbols-outlined">download</span>
+                        <span class="text-sm font-semibold">Export Excel</span>
+                    </button>
+                    <button @onclick="GoBack"
+                            class="flex items-center gap-3 rounded-2xl px-6 py-3 bg-white text-gray-700 border border-gray-200 hover:border-gray-300 hover:bg-gray-50 transition-all duration-300 shadow-sm hover:shadow-md">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        <span class="text-sm font-semibold">Back</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Date Range Selector Card -->
+        <div class="bg-white rounded-3xl border border-gray-200/80 p-8 mb-8 shadow-lg backdrop-blur-sm bg-white/95">
+            <div class="flex items-center gap-3 mb-6">
+                <span class="material-symbols-outlined text-purple-500 text-2xl">calendar_month</span>
+                <h3 class="text-2xl font-bold text-gray-900">Date Range</h3>
+            </div>
+
+            <div class="flex flex-wrap gap-6 items-center">
+                <!-- Quick Date Buttons -->
+                <div class="flex flex-wrap gap-3">
+                    @foreach (var range in new[] { "today", "yesterday", "thisMonth", "lastMonth", "custom" })
+                    {
+                        var rangeConfig = range switch
+                        {
+                            "today" => ("Today", "today"),
+                            "yesterday" => ("Yesterday", "schedule"),
+                            "thisMonth" => ("This Month", "calendar_today"),
+                            "lastMonth" => ("Last Month", "event"),
+                            "custom" => ("Custom", "date_range"),
+                            _ => ("", "")
+                        };
+
+                        <button @onclick='() => SetDateRange(range)'
+                                class="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold transition-all duration-300 @(selectedRange == range ? "bg-gradient-to-r from-purple-500 to-pink-600 text-white shadow-lg" : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:shadow-md")">
+                            <span class="material-symbols-outlined text-lg">@rangeConfig.Item2</span>
+                            @rangeConfig.Item1
+                        </button>
+                    }
+                </div>
+
+                <!-- Custom Date Inputs -->
+                @if (selectedRange == "custom")
+                {
+                    <div class="flex items-center gap-4 bg-purple-50/50 rounded-2xl p-4 border border-purple-200/50">
+                        <div class="flex items-center gap-4">
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">From Date</label>
+                                <input type="date" @bind="startDate" @bind:format="yyyy-MM-dd"
+                                       class="form-input rounded-xl border-gray-300 focus:border-purple-500 focus:ring-purple-500 shadow-sm px-4 py-3" />
+                            </div>
+                            <div>
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">To Date</label>
+                                <input type="date" @bind="endDate" @bind:format="yyyy-MM-dd"
+                                       class="form-input rounded-xl border-gray-300 focus:border-purple-500 focus:ring-purple-500 shadow-sm px-4 py-3" />
+                            </div>
+                        </div>
+                        <button @onclick="LoadCustomerData"
+                                class="mt-6 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all duration-300 shadow-lg hover:shadow-xl font-semibold">
+                            Apply Filter
+                        </button>
+                    </div>
+                }
+            </div>
+
+            <!-- Selected Date Range Display -->
+            <div class="mt-6 p-5 bg-gradient-to-r from-purple-500/10 to-pink-500/10 rounded-2xl border border-purple-200/50">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-semibold text-purple-800">
+                            👥 Showing customers from: <span class="font-bold text-lg">@GetDateRangeDisplay()</span>
+                        </p>
+                        <div class="flex gap-6 mt-2">
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-purple-500 text-lg">people</span>
+                                <span class="text-sm text-purple-700">
+                                    <span class="font-bold">@customerReports.Count()</span> customers
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-green-500 text-lg">receipt</span>
+                                <span class="text-sm text-green-700">
+                                    <span class="font-bold">@customerReports.Sum(x => x.TotalTransactions)</span> transactions
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="material-symbols-outlined text-blue-500 text-lg">payments</span>
+                                <span class="text-sm text-blue-700">
+                                    <span class="font-bold">Rs @($"{customerReports.Sum(x => x.TotalSpent):N0}")</span> total spent
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold text-gray-900">
+                            @customerReports.Count()
+                        </div>
+                        <div class="text-sm text-gray-600">Total Customers</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customer Summary Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Total Customers Card -->
+            <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-200/60">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-semibold text-gray-600">Total Customers</p>
+                        <p class="text-3xl font-bold text-gray-900 mt-2">@customerReports.Count()</p>
+                    </div>
+                    <div class="p-3 bg-purple-100 rounded-xl">
+                        <span class="material-symbols-outlined text-purple-600 text-2xl">group</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VIP Customers Card -->
+            <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-200/60">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-semibold text-gray-600">VIP Customers</p>
+                        <p class="text-3xl font-bold text-amber-600 mt-2">@customerReports.Count(c => c.IsVip)</p>
+                    </div>
+                    <div class="p-3 bg-amber-100 rounded-xl">
+                        <span class="material-symbols-outlined text-amber-600 text-2xl">diamond</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Total Revenue Card -->
+            <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-200/60">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-semibold text-gray-600">Total Revenue</p>
+                        <p class="text-3xl font-bold text-blue-600 mt-2">Rs @($"{customerReports.Sum(x => x.TotalSpent):N0}")</p>
+                    </div>
+                    <div class="p-3 bg-blue-100 rounded-xl">
+                        <span class="material-symbols-outlined text-blue-600 text-2xl">payments</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Avg. Spend Card -->
+            <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-200/60">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-semibold text-gray-600">Avg. Spend</p>
+                        <p class="text-3xl font-bold text-orange-600 mt-2">
+                            Rs @($"{(customerReports.Any() ? customerReports.Average(x => x.TotalSpent) : 0):N0}")
+                        </p>
+                    </div>
+                    <div class="p-3 bg-orange-100 rounded-xl">
+                        <span class="material-symbols-outlined text-orange-600 text-2xl">trending_up</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customers List Card -->
+        <div class="bg-white rounded-3xl border border-gray-200/80 shadow-xl overflow-hidden">
+            <!-- Card Header -->
+            <div class="px-8 py-6 border-b border-gray-200/60 bg-gradient-to-r from-gray-50 to-purple-50/30">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-2xl text-purple-600">list_alt</span>
+                        <h3 class="text-2xl font-bold text-gray-900">Customer Details</h3>
+                    </div>
+                    <div class="flex items-center gap-2 text-sm text-gray-500">
+                        <span class="material-symbols-outlined text-lg">filter_list</span>
+                        @customerReports.Count() customers found
+                    </div>
+                </div>
+            </div>
+
+            @if (isLoading)
+            {
+                <div class="flex flex-col justify-center items-center py-16">
+                    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mb-4"></div>
+                    <p class="text-gray-600 text-lg font-medium">Loading customer data...</p>
+                    <p class="text-gray-400 text-sm mt-2">Gathering customer insights</p>
+                </div>
+            }
+            else if (!customerReports.Any())
+            {
+                <div class="text-center py-16">
+                    <div class="p-6 bg-gray-50 rounded-3xl inline-block mb-4">
+                        <span class="material-symbols-outlined text-6xl text-gray-400">person_off</span>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-600 mb-2">No Customers Found</h4>
+                    <p class="text-gray-500 max-w-md mx-auto">
+                        No customer data found for the selected period. Try adjusting your date range.
+                    </p>
+                </div>
+            }
+            else
+            {
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gradient-to-r from-gray-50 to-gray-100/50">
+                            <tr>
+                                <th class="px-8 py-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined">person</span>
+                                        Customer Details
+                                    </div>
+                                </th>
+                                <th class="px-8 py-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined">contact_phone</span>
+                                        Contact & RFID
+                                    </div>
+                                </th>
+                                <th class="px-8 py-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined">account_balance</span>
+                                        Balance
+                                    </div>
+                                </th>
+                                <th class="px-8 py-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined">receipt</span>
+                                        Transactions & Spending
+                                    </div>
+                                </th>
+                                <th class="px-8 py-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined">calendar_today</span>
+                                        Activity
+                                    </div>
+                                </th>
+                                <th class="px-8 py-5 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                                    <div class="flex items-center gap-2">
+                                        <span class="material-symbols-outlined">stars</span>
+                                        Status
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200/60">
+                            @foreach (var customer in customerReports)
+                            {
+                                var isVip = customer.IsVip;
+                                var isHighValue = customer.TotalSpent > 5000;
+                                var isActive = customer.LastActivityDate >= DateTime.Today.AddDays(-7);
+                                var isNewCustomer = customer.CreatedAt >= DateTime.Today.AddDays(-30);
+
+                                var rowClass = isVip ? "bg-gradient-to-r from-amber-50 to-yellow-50/50 hover:from-amber-100 hover:to-yellow-100/50" :
+                                isHighValue ? "bg-gradient-to-r from-blue-50 to-sky-50/50 hover:from-blue-100 hover:to-sky-100/50" :
+                                isNewCustomer ? "bg-gradient-to-r from-green-50 to-emerald-50/50 hover:from-green-100 hover:to-emerald-100/50" :
+                                "bg-white hover:bg-gray-50/80";
+
+                                <tr class="@rowClass transition-all duration-300 hover:scale-[1.01] hover:shadow-lg">
+                                    <!-- Customer Details -->
+                                    <td class="px-8 py-6 whitespace-nowrap">
+                                        <div class="flex items-center gap-4">
+                                            <div class="p-3 rounded-2xl bg-white shadow-sm border border-gray-200/60">
+                                                <span class="material-symbols-outlined text-purple-500">
+                                                    @(isVip ? "diamond" : "person")
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <div class="text-lg font-semibold text-gray-900">
+                                                    @customer.Name
+                                                </div>
+                                                <div class="text-sm text-gray-500 flex items-center gap-2 mt-1">
+                                                    <span class="material-symbols-outlined text-xs">fingerprint</span>
+                                                    ID: @customer.CustomerId
+                                                </div>
+                                                <div class="text-xs text-gray-400 mt-1">
+                                                    Member since: @customer.CreatedAt.ToString("MMM dd, yyyy")
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <!-- Contact & RFID -->
+                                    <td class="px-8 py-6 whitespace-nowrap">
+                                        <div class="space-y-3">
+                                            <div class="flex items-center gap-2 text-sm text-gray-700">
+                                                <span class="material-symbols-outlined text-blue-500 text-lg">credit_card</span>
+                                                <span class="font-mono text-xs bg-gray-100 px-2 py-1 rounded">@customer.RFID</span>
+                                            </div>
+                                            @if (!string.IsNullOrEmpty(customer.Phone))
+                                            {
+                                                <div class="flex items-center gap-2 text-sm text-gray-700">
+                                                    <span class="material-symbols-outlined text-green-500 text-lg">phone</span>
+                                                    @customer.Phone
+                                                </div>
+                                            }
+                                            @if (!string.IsNullOrEmpty(customer.Email))
+                                            {
+                                                <div class="flex items-center gap-2 text-sm text-gray-700">
+                                                    <span class="material-symbols-outlined text-purple-500 text-lg">mail</span>
+                                                    <span class="text-xs">@customer.Email</span>
+                                                </div>
+                                            }
+                                        </div>
+                                    </td>
+
+                                    <!-- Balance -->
+                                    <td class="px-8 py-6 whitespace-nowrap">
+                                        <div class="space-y-3">
+                                            <div class="flex items-center gap-2">
+                                                <span class="material-symbols-outlined text-green-600">account_balance_wallet</span>
+                                                <div>
+                                                    <div class="text-lg font-bold text-gray-900">Rs @customer.MainBalance</div>
+                                                    <div class="text-xs text-gray-500">Main Balance</div>
+                                                </div>
+                                            </div>
+                                            @if (customer.BonusBalance > 0)
+                                            {
+                                                <div class="flex items-center gap-2">
+                                                    <span class="material-symbols-outlined text-amber-600">celebration</span>
+                                                    <div>
+                                                        <div class="text-md font-semibold text-amber-600">Rs @customer.BonusBalance</div>
+                                                        <div class="text-xs text-gray-500">Bonus</div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </td>
+
+                                    <!-- Transactions & Spending -->
+                                    <td class="px-8 py-6 whitespace-nowrap">
+                                        <div class="space-y-3">
+                                            <div class="flex items-center gap-3">
+                                                <div class="p-2 bg-blue-100 rounded-xl">
+                                                    <span class="material-symbols-outlined text-blue-600 text-lg">shopping_cart</span>
+                                                </div>
+                                                <div>
+                                                    <div class="text-xl font-bold text-gray-900">@customer.TotalTransactions</div>
+                                                    <div class="text-xs text-gray-500 font-medium">TRANSACTIONS</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center gap-3">
+                                                <div class="p-2 bg-green-100 rounded-xl">
+                                                    <span class="material-symbols-outlined text-green-600 text-lg">currency_rupee</span>
+                                                </div>
+                                                <div>
+                                                    <div class="text-xl font-bold text-gray-900">Rs @($"{customer.TotalSpent:N0}")</div>
+                                                    <div class="text-xs text-gray-500 font-medium">TOTAL SPENT</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <!-- Activity -->
+                                    <td class="px-8 py-6 whitespace-nowrap">
+                                        <div class="space-y-2">
+                                            <div class="text-sm font-semibold text-gray-900">
+                                                @customer.LastActivityDate.ToString("MMM dd, yyyy")
+                                            </div>
+                                            <div class="text-xs text-gray-500">
+                                                @customer.LastActivityDate.ToString("hh:mm tt")
+                                            </div>
+                                            <div class="text-xs @(isActive ? "text-green-600 font-semibold" : "text-gray-400")">
+                                                @(isActive ? "Active" : "Inactive")
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <!-- Status -->
+                                    <td class="px-8 py-6 whitespace-nowrap">
+                                        <div class="flex flex-col gap-2">
+                                            @if (isVip)
+                                            {
+                                                <span class="inline-flex items-center px-3 py-1 text-xs font-bold bg-amber-100 text-amber-800 rounded-full border border-amber-200">
+                                                    <span class="material-symbols-outlined text-xs mr-1">diamond</span>
+                                                    VIP
+                                                </span>
+                                            }
+                                            @if (isNewCustomer)
+                                            {
+                                                <span class="inline-flex items-center px-3 py-1 text-xs font-bold bg-green-100 text-green-800 rounded-full border border-green-200">
+                                                    <span class="material-symbols-outlined text-xs mr-1">new_releases</span>
+                                                    New
+                                                </span>
+                                            }
+                                            @if (isHighValue)
+                                            {
+                                                <span class="inline-flex items-center px-3 py-1 text-xs font-bold bg-purple-100 text-purple-800 rounded-full border border-purple-200">
+                                                    <span class="material-symbols-outlined text-xs mr-1">trending_up</span>
+                                                    High Value
+                                                </span>
+                                            }
+                                            @if (customer.TotalSpent > 10000)
+                                            {
+                                                <span class="inline-flex items-center px-3 py-1 text-xs font-bold bg-blue-100 text-blue-800 rounded-full border border-blue-200">
+                                                    <span class="material-symbols-outlined text-xs mr-1">star</span>
+                                                    Premium
+                                                </span>
+                                            }
+                                            @if (!isActive)
+                                            {
+                                                <span class="inline-flex items-center px-3 py-1 text-xs font-bold bg-gray-100 text-gray-800 rounded-full border border-gray-200">
+                                                    <span class="material-symbols-outlined text-xs mr-1">schedule</span>
+                                                    Inactive
+                                                </span>
+                                            }
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Legend -->
+                <div class="px-8 py-4 bg-gradient-to-r from-gray-50 to-gray-100/50 border-t border-gray-200/60">
+                    <div class="flex flex-wrap gap-6 items-center text-sm">
+                        <div class="font-semibold text-gray-700 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-lg">legend_toggle</span>
+                            Customer Types:
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 bg-amber-100 border-2 border-amber-300 rounded-lg"></div>
+                            <span class="text-amber-700 font-medium">VIP Customers</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 bg-green-100 border-2 border-green-300 rounded-lg"></div>
+                            <span class="text-green-700 font-medium">New Customers</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 bg-blue-100 border-2 border-blue-300 rounded-lg"></div>
+                            <span class="text-blue-700 font-medium">High Value</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 bg-purple-100 border-2 border-purple-300 rounded-lg"></div>
+                            <span class="text-purple-700 font-medium">Premium</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<Models.CustomerReport> customerReports = new List<Models.CustomerReport>();
+    private bool isLoading = false;
+    private string selectedRange = "today";
+    private DateTime startDate = DateTime.Today;
+    private DateTime endDate = DateTime.Today;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCustomerData();
+    }
+
+    private async Task LoadCustomerData()
+    {
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            // Get customers who made payments in the selected date range
+            var payments = await PaymentRepository.GetSalesByDateRangeAsync(startDate, endDate);
+
+            // Group payments by customer and create customer reports
+            customerReports = payments
+                .GroupBy(p => p.customer_id)
+                .Select(g =>
+                {
+                    var firstPayment = g.First();
+                    return new Models.CustomerReport
+                    {
+                        CustomerId = g.Key,
+                        Name = firstPayment.name ?? "Unknown Customer",
+                        Phone = firstPayment.phone ?? "",
+                        Email = firstPayment.email ?? "",
+                        RFID = firstPayment.rfid ?? "",
+                        MainBalance = firstPayment.pre_amount, // Using pre_amount as main balance
+                        BonusBalance = firstPayment.bonus_amount,
+                        TotalTransactions = g.Count(),
+                        TotalSpent = g.Sum(p => p.recharge_amount ?? 0),
+                        LastActivityDate = g.Max(p => p.created_at),
+                        CreatedAt = g.Min(p => p.created_at),
+                        IsVip = firstPayment.recharge_amount >= 3000 // VIP if any recharge >= 3000
+                    };
+                })
+                .OrderByDescending(c => c.TotalSpent)
+                .ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading customer data: {ex.Message}");
+            customerReports = new List<Models.CustomerReport>();
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private void SetDateRange(string range)
+    {
+        selectedRange = range;
+
+        switch (range)
+        {
+            case "today":
+                startDate = DateTime.Today;
+                endDate = DateTime.Today;
+                break;
+            case "yesterday":
+                startDate = DateTime.Today.AddDays(-1);
+                endDate = DateTime.Today.AddDays(-1);
+                break;
+            case "thisMonth":
+                startDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                endDate = DateTime.Today;
+                break;
+            case "lastMonth":
+                var lastMonth = DateTime.Today.AddMonths(-1);
+                startDate = new DateTime(lastMonth.Year, lastMonth.Month, 1);
+                endDate = new DateTime(lastMonth.Year, lastMonth.Month, DateTime.DaysInMonth(lastMonth.Year, lastMonth.Month));
+                break;
+            case "custom":
+                // Keep current dates for custom selection
+                break;
+        }
+
+        if (range != "custom")
+        {
+            _ = LoadCustomerData();
+        }
+    }
+
+    private string GetDateRangeDisplay()
+    {
+        return selectedRange switch
+        {
+            "today" => "Today",
+            "yesterday" => "Yesterday",
+            "thisMonth" => "This Month",
+            "lastMonth" => "Last Month",
+            "custom" => $"{startDate:MMM dd, yyyy} to {endDate:MMM dd, yyyy}",
+            _ => "Unknown Range"
+        };
+    }
+
+    private async Task ExportToExcel()
+    {
+        // Implement Excel export functionality
+        Console.WriteLine("Exporting customer data to Excel...");
+    }
+
+    private void GoBack()
+    {
+        NavigationManager.NavigateTo("/reports");
+    }
+    // public class CustomerReport
+    // {
+    //     public int CustomerId { get; set; }
+    //     public string Name { get; set; } = string.Empty;
+    //     public string Phone { get; set; } = string.Empty;
+    //     public string Email { get; set; } = string.Empty;
+    //     public string RFID { get; set; } = string.Empty;
+    //     public decimal MainBalance { get; set; }
+    //     public decimal BonusBalance { get; set; }
+    //     public int TotalTransactions { get; set; }
+    //     public decimal TotalSpent { get; set; }
+    //     public DateTime LastActivityDate { get; set; }
+    //     public DateTime CreatedAt { get; set; }
+    //     public bool IsVip { get; set; }
+    // }
+}
+

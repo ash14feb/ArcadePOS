@@ -1,0 +1,774 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\ashwa\\source\\repos\\APOS3\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\ordersidebar.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\ordersidebar.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\pages\\administration\\managegame.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\pages\\administration\\managegame.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\services\\udplistenerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:services\\udplistenerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\dataaccess\\repos\\devicesetuprepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:dataaccess\\repos\\devicesetuprepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\pages\\managecustomer.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\pages\\managecustomer.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\services\\rfidservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:services\\rfidservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\dataaccess\\repos\\gamerepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:dataaccess\\repos\\gamerepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\models\\bonus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:models\\bonus.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\dataaccess\\customerbillingrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:dataaccess\\customerbillingrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\models\\models.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:models\\models.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\services\\udpbackgroundservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:services\\udpbackgroundservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\pages\\administration.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\pages\\administration.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\pages\\administration\\managedevicesetup.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\pages\\administration\\managedevicesetup.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\pages\\reports\\salesreport.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\pages\\reports\\salesreport.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\apos3.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:apos3.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\sidebar.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\sidebar.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\pages\\reports\\refundreport.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\pages\\reports\\refundreport.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\pages\\reports\\game.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\pages\\reports\\game.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\pages\\reports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\pages\\reports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\pages\\reports\\customerreport.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\pages\\reports\\customerreport.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\dataaccess\\repos\\bonusrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:dataaccess\\repos\\bonusrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\pages\\managecustomer.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\pages\\managecustomer.razor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\animatedcounter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\animatedcounter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\dataaccess\\dapperrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:dataaccess\\dapperrepo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\services\\orderstateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:services\\orderstateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\dataaccess\\dbbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:dataaccess\\dbbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:wwwroot\\css\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\platforms\\windows\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:platforms\\windows\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\pages\\test.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\pages\\test.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\udpstatus.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\udpstatus.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\pages\\udptest.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\pages\\udptest.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\wwwroot\\css\\tailwind.js||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:wwwroot\\css\\tailwind.js||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\wwwroot\\css\\tailwind.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:wwwroot\\css\\tailwind.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\wwwroot\\css\\tailwind_ds.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:wwwroot\\css\\tailwind_ds.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\styles\\tailwind.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:styles\\tailwind.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|c:\\users\\ashwa\\source\\repos\\apos3\\components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{E58ED1F3-5268-40F6-A153-3F4C9A157FF6}|APOS3.csproj|solutionrelative:components\\routes.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 42,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DeviceSetupRepo.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\DataAccess\\Repos\\DeviceSetupRepo.cs",
+              "RelativeDocumentMoniker": "DataAccess\\Repos\\DeviceSetupRepo.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\DataAccess\\Repos\\DeviceSetupRepo.cs",
+              "RelativeToolTip": "DataAccess\\Repos\\DeviceSetupRepo.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAwCwAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-21T15:38:17.188Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ManageGame.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\administration\\ManageGame.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\administration\\ManageGame.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\administration\\ManageGame.razor",
+              "RelativeToolTip": "Components\\Pages\\administration\\ManageGame.razor",
+              "ViewState": "AgIAAIgBAAAAAAAAAAAAAJkBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-21T09:39:21.976Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "GameRepo.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\DataAccess\\Repos\\GameRepo.cs",
+              "RelativeDocumentMoniker": "DataAccess\\Repos\\GameRepo.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\DataAccess\\Repos\\GameRepo.cs",
+              "RelativeToolTip": "DataAccess\\Repos\\GameRepo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAoAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-21T09:36:40.366Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "ManageDeviceSetup.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\administration\\ManageDeviceSetup.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\administration\\ManageDeviceSetup.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\administration\\ManageDeviceSetup.razor",
+              "RelativeToolTip": "Components\\Pages\\administration\\ManageDeviceSetup.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-21T09:24:17.082Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "APOS3",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\APOS3.csproj",
+              "RelativeDocumentMoniker": "APOS3.csproj",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\APOS3.csproj",
+              "RelativeToolTip": "APOS3.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-11-21T09:16:36.457Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Home.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\Home.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\Home.razor",
+              "RelativeToolTip": "Components\\Pages\\Home.razor",
+              "ViewState": "AgIAAFYAAAAAAAAAAAAAAGcAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-21T09:07:16.112Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Administration.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\Administration.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\Administration.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\Administration.razor",
+              "RelativeToolTip": "Components\\Pages\\Administration.razor",
+              "ViewState": "AgIAABIAAAAAAAAAAAAiwCkAAABDAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-21T09:03:02.462Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "RefundReport.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\reports\\RefundReport.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\reports\\RefundReport.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\reports\\RefundReport.razor",
+              "RelativeToolTip": "Components\\Pages\\reports\\RefundReport.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-21T06:27:41.168Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "Game.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\reports\\Game.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\reports\\Game.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\reports\\Game.razor",
+              "RelativeToolTip": "Components\\Pages\\reports\\Game.razor",
+              "ViewState": "AgIAAPEAAAAAAAAAAADwvwQBAABiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-21T06:02:37.254Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "CustomerReport.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\reports\\CustomerReport.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\reports\\CustomerReport.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\reports\\CustomerReport.razor",
+              "RelativeToolTip": "Components\\Pages\\reports\\CustomerReport.razor",
+              "ViewState": "AgIAADcCAAAAAAAAAAAAwEMCAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-21T04:53:32.645Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "SalesReport.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\reports\\SalesReport.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\reports\\SalesReport.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\reports\\SalesReport.razor",
+              "RelativeToolTip": "Components\\Pages\\reports\\SalesReport.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-20T19:23:36.017Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 27,
+              "Title": "AnimatedCounter.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\AnimatedCounter.razor",
+              "RelativeDocumentMoniker": "Components\\AnimatedCounter.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\AnimatedCounter.razor",
+              "RelativeToolTip": "Components\\AnimatedCounter.razor",
+              "ViewState": "AgIAABEAAAAAAAAAAAAmwCcAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-20T17:50:53.337Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "ManageCustomer.razor.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\ManageCustomer.razor.cs",
+              "RelativeDocumentMoniker": "Components\\Pages\\ManageCustomer.razor.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\ManageCustomer.razor.cs",
+              "RelativeToolTip": "Components\\Pages\\ManageCustomer.razor.cs",
+              "ViewState": "AgIAACwBAAAAAAAAAAAmwEMBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-20T11:19:59.302Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Platforms\\Windows\\App.xaml.cs",
+              "RelativeDocumentMoniker": "Platforms\\Windows\\App.xaml.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Platforms\\Windows\\App.xaml.cs",
+              "RelativeToolTip": "Platforms\\Windows\\App.xaml.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAwBEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T15:59:45.075Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\App.xaml.cs",
+              "RelativeDocumentMoniker": "App.xaml.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\App.xaml.cs",
+              "RelativeToolTip": "App.xaml.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAYwA4AAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T15:14:27.429Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "MainPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\MainPage.xaml.cs",
+              "RelativeDocumentMoniker": "MainPage.xaml.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\MainPage.xaml.cs",
+              "RelativeToolTip": "MainPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T15:12:35.393Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 37,
+              "Title": "Udptest.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\Udptest.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\Udptest.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\Udptest.razor",
+              "RelativeToolTip": "Components\\Pages\\Udptest.razor",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAwwCgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-19T14:40:56.514Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 36,
+              "Title": "UdpStatus.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\UdpStatus.razor",
+              "RelativeDocumentMoniker": "Components\\UdpStatus.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\UdpStatus.razor",
+              "RelativeToolTip": "Components\\UdpStatus.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-19T13:40:33.047Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "udpBackgroundService.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Services\\udpBackgroundService.cs",
+              "RelativeDocumentMoniker": "Services\\udpBackgroundService.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Services\\udpBackgroundService.cs",
+              "RelativeToolTip": "Services\\udpBackgroundService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T13:38:02.803Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "UdpListenerService.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Services\\UdpListenerService.cs",
+              "RelativeDocumentMoniker": "Services\\UdpListenerService.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Services\\UdpListenerService.cs",
+              "RelativeToolTip": "Services\\UdpListenerService.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAQwCQAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T13:35:47.472Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "RFidService.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Services\\RFidService.cs",
+              "RelativeDocumentMoniker": "Services\\RFidService.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Services\\RFidService.cs",
+              "RelativeToolTip": "Services\\RFidService.cs",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAYwEcAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T09:01:36.838Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "OrderStateService.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Services\\OrderStateService.cs",
+              "RelativeDocumentMoniker": "Services\\OrderStateService.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Services\\OrderStateService.cs",
+              "RelativeToolTip": "Services\\OrderStateService.cs",
+              "ViewState": "AgIAADEAAAAAAAAAAAAWwDwAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T07:44:15.412Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "BonusRepo.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\DataAccess\\Repos\\BonusRepo.cs",
+              "RelativeDocumentMoniker": "DataAccess\\Repos\\BonusRepo.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\DataAccess\\Repos\\BonusRepo.cs",
+              "RelativeToolTip": "DataAccess\\Repos\\BonusRepo.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAWwEkAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T07:30:02.61Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Bonus.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Models\\Bonus.cs",
+              "RelativeDocumentMoniker": "Models\\Bonus.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Models\\Bonus.cs",
+              "RelativeToolTip": "Models\\Bonus.cs",
+              "ViewState": "AgIAAEkAAAAAAAAAAAAqwFIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T07:29:18.509Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "CustomerBillingRepo.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\DataAccess\\CustomerBillingRepo.cs",
+              "RelativeDocumentMoniker": "DataAccess\\CustomerBillingRepo.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\DataAccess\\CustomerBillingRepo.cs",
+              "RelativeToolTip": "DataAccess\\CustomerBillingRepo.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAgwMIAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T07:21:58.255Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Models.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Models\\Models.cs",
+              "RelativeDocumentMoniker": "Models\\Models.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Models\\Models.cs",
+              "RelativeToolTip": "Models\\Models.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAmwDEAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T07:19:18.841Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "DapperRepo.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\DataAccess\\DapperRepo.cs",
+              "RelativeDocumentMoniker": "DataAccess\\DapperRepo.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\DataAccess\\DapperRepo.cs",
+              "RelativeToolTip": "DataAccess\\DapperRepo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T07:17:27.714Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "DBBase.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\DataAccess\\DBBase.cs",
+              "RelativeDocumentMoniker": "DataAccess\\DBBase.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\DataAccess\\DBBase.cs",
+              "RelativeToolTip": "DataAccess\\DBBase.cs",
+              "ViewState": "AgIAACIAAAAAAAAAAAAwwCoAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T07:16:26.452Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "MauiProgram.cs",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\MauiProgram.cs",
+              "RelativeToolTip": "MauiProgram.cs",
+              "ViewState": "AgIAACMAAAAAAAAAAAAowDEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-19T07:11:51.215Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 39,
+              "Title": "MainPage.xaml",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\MainPage.xaml",
+              "RelativeDocumentMoniker": "MainPage.xaml",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\MainPage.xaml",
+              "RelativeToolTip": "MainPage.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-11-19T07:11:47.408Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\App.xaml",
+              "RelativeDocumentMoniker": "App.xaml",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\App.xaml",
+              "RelativeToolTip": "App.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-11-19T07:11:37.333Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 40,
+              "Title": "tailwind.js",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\tailwind.js",
+              "RelativeDocumentMoniker": "wwwroot\\css\\tailwind.js",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\tailwind.js",
+              "RelativeToolTip": "wwwroot\\css\\tailwind.js",
+              "ViewState": "AgIAACwAAAAAAAAAAAAowEcAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-19T06:38:45.38Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 41,
+              "Title": "tailwind.css",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\tailwind.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\tailwind.css",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\tailwind.css",
+              "RelativeToolTip": "wwwroot\\css\\tailwind.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-19T06:37:18.136Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 42,
+              "Title": "tailwind_DS.css",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\tailwind_DS.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\tailwind_DS.css",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\tailwind_DS.css",
+              "RelativeToolTip": "wwwroot\\css\\tailwind_DS.css",
+              "ViewState": "AgIAAIsDAAAAAAAAAAAowLEDAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-19T06:29:09.817Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 43,
+              "Title": "tailwind.css",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Styles\\tailwind.css",
+              "RelativeDocumentMoniker": "Styles\\tailwind.css",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Styles\\tailwind.css",
+              "RelativeToolTip": "Styles\\tailwind.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-19T06:21:06.59Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Reports.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\Reports.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\Reports.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\Reports.razor",
+              "RelativeToolTip": "Components\\Pages\\Reports.razor",
+              "ViewState": "AgIAADwAAAAAAAAAAAAjwEYAAACUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-18T10:01:37.588Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ManageCustomer.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\ManageCustomer.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\ManageCustomer.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\ManageCustomer.razor",
+              "RelativeToolTip": "Components\\Pages\\ManageCustomer.razor",
+              "ViewState": "AgIAANsAAAAAAAAAAAAmwOEAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-18T09:25:13.05Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "app.css",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\app.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\app.css",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\app.css",
+              "RelativeToolTip": "wwwroot\\css\\app.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-18T09:15:28.922Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 44,
+              "Title": "Routes.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Routes.razor",
+              "RelativeDocumentMoniker": "Components\\Routes.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Routes.razor",
+              "RelativeToolTip": "Components\\Routes.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-18T09:10:14.247Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
+              "Title": "Test.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\Test.razor",
+              "RelativeDocumentMoniker": "Components\\Pages\\Test.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Pages\\Test.razor",
+              "RelativeToolTip": "Components\\Pages\\Test.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-18T09:07:01.381Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 38,
+              "Title": "index.html",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\index.html",
+              "RelativeDocumentMoniker": "wwwroot\\index.html",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\index.html",
+              "RelativeToolTip": "wwwroot\\index.html",
+              "ViewState": "AgIAAD0AAAAAAAAAAAAwwE4AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-11-18T09:00:58.907Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "OrderSidebar.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\OrderSidebar.razor",
+              "RelativeDocumentMoniker": "Components\\OrderSidebar.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\OrderSidebar.razor",
+              "RelativeToolTip": "Components\\OrderSidebar.razor",
+              "ViewState": "AgIAAEoBAAAAAAAAAAAYwFQBAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-18T09:00:43.115Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "Sidebar.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Sidebar.razor",
+              "RelativeDocumentMoniker": "Components\\Sidebar.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Sidebar.razor",
+              "RelativeToolTip": "Components\\Sidebar.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-18T08:57:34.342Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "NavMenu.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Layout\\NavMenu.razor",
+              "RelativeDocumentMoniker": "Components\\Layout\\NavMenu.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "Components\\Layout\\NavMenu.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-18T08:56:03.007Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 29,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "Components\\Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\ashwa\\source\\repos\\APOS3\\Components\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "Components\\Layout\\MainLayout.razor",
+              "ViewState": "AgIAABEAAAAAAAAAAAAuwCMAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-18T08:55:44.814Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

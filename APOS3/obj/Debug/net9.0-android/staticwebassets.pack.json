@@ -1,0 +1,65 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\ashwa\\source\\repos\\APOS3\\obj\\Debug\\net9.0-android\\scopedcss\\bundle\\APOS3.styles.css",
+      "PackagePath": "staticwebassets\\APOS3.styles.css"
+    },
+    {
+      "Id": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\app.css",
+      "PackagePath": "staticwebassets\\css\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\css\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\tailwind.css",
+      "PackagePath": "staticwebassets\\css\\tailwind.css"
+    },
+    {
+      "Id": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\tailwind.js",
+      "PackagePath": "staticwebassets\\css\\tailwind.js"
+    },
+    {
+      "Id": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\css\\tailwind_DS.css",
+      "PackagePath": "staticwebassets\\css\\tailwind_DS.css"
+    },
+    {
+      "Id": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\images\\logo.png",
+      "PackagePath": "staticwebassets\\images\\logo.png"
+    },
+    {
+      "Id": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\ashwa\\source\\repos\\APOS3\\wwwroot\\logo.png",
+      "PackagePath": "staticwebassets\\logo.png"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-android\\staticwebassets\\msbuild.APOS3.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-android\\staticwebassets\\msbuild.APOS3.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-android\\staticwebassets\\msbuild.build.APOS3.props",
+      "PackagePath": "build\\APOS3.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-android\\staticwebassets\\msbuild.buildMultiTargeting.APOS3.props",
+      "PackagePath": "buildMultiTargeting\\APOS3.props"
+    },
+    {
+      "Id": "obj\\Debug\\net9.0-android\\staticwebassets\\msbuild.buildTransitive.APOS3.props",
+      "PackagePath": "buildTransitive\\APOS3.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

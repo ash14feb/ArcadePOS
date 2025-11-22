@@ -1,0 +1,16 @@
+wwwroot\css\app.css
+wwwroot\css\bootstrap\bootstrap.min.css
+wwwroot\css\bootstrap\bootstrap.min.css.map
+wwwroot\css\tailwind.css
+wwwroot\css\tailwind.js
+wwwroot\css\tailwind_DS.css
+wwwroot\images\logo.png
+wwwroot\index.html
+wwwroot\logo.png
+C:\Users\ashwa\source\repos\APOS3\wwwroot\css\bootstrap\bootstrap.min.css.map
+C:\Users\ashwa\source\repos\APOS3\wwwroot\css\bootstrap\bootstrap.min.css
+C:\Users\ashwa\source\repos\APOS3\wwwroot\css\app.css
+C:\Users\ashwa\source\repos\APOS3\wwwroot\css\tailwind.css
+C:\Users\ashwa\source\repos\APOS3\wwwroot\css\tailwind_DS.css
+C:\Users\ashwa\source\repos\APOS3\wwwroot\index.html
+C:\Users\ashwa\source\repos\APOS3\wwwroot\css\tailwind.js

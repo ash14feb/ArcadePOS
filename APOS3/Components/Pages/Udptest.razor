@@ -1,0 +1,41 @@
+﻿@page "/udp-test"
+@inject IJSRuntime JSRuntime
+
+<PageTitle>UDP Test</PageTitle>
+
+<div class="p-6">
+    <h1 class="text-2xl font-bold mb-4">UDP Immediate Test</h1>
+    
+    <button @onclick="SendTestUdp" class="bg-blue-500 text-white px-4 py-2 rounded">
+        Send Test UDP Message
+    </button>
+    
+    <div class="mt-4 p-4 bg-gray-100 rounded">
+        <h3 class="font-semibold">Check Console Output</h3>
+        <p>Open your browser's Developer Tools (F12) and check the Console tab</p>
+    </div>
+</div>
+
+@code {
+    private async Task SendTestUdp()
+    {
+        try
+        {
+            // This will send a UDP message to your own application
+            using var client = new System.Net.Sockets.UdpClient();
+            var message = "{TEST1234}<567890123>";
+            var data = System.Text.Encoding.ASCII.GetBytes(message);
+            var endpoint = new System.Net.IPEndPoint(System.Net.IPAddress.Loopback, 9000);
+            
+            await client.SendAsync(data, data.Length, endpoint);
+            Console.WriteLine("✅ Test UDP message sent to 127.0.0.1:9000");
+            
+            await JSRuntime.InvokeVoidAsync("alert", "Test message sent! Check your application console.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"❌ Failed to send test: {ex.Message}");
+            await JSRuntime.InvokeVoidAsync("alert", $"Error: {ex.Message}");
+        }
+    }
+}

@@ -1,0 +1,40 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
+
+<div class="relative flex h-screen w-full flex-row overflow-hidden">
+    <Sidebar />
+    
+    <main class="flex-1 flex flex-col p-6 overflow-y-auto bg-background-light">
+        <div class="flex flex-wrap justify-between gap-4 items-center mb-4">
+            <p class="text-neutral-900 text-4xl font-black leading-tight tracking-[-0.033em] min-w-72">@GetPageTitle()</p>
+            <button class="flex items-center gap-2 rounded-lg px-4 py-2 bg-neutral-800 text-white hover:bg-neutral-700 transition-colors">
+                <span class="material-symbols-outlined">dark_mode</span>
+                <span class="text-sm font-medium">Dark Mode</span>
+            </button>
+        </div>
+        
+        @Body
+    </main>
+    
+    @if (ShouldShowOrderSidebar())
+    {
+        <OrderSidebar />
+    }
+</div>
+
+@code {
+    private bool ShouldShowOrderSidebar()
+    {
+        var currentUri = NavigationManager.Uri;
+        return currentUri.Contains("/manage-customer");
+    }
+
+    private string GetPageTitle()
+    {
+        var currentUri = NavigationManager.Uri;
+        if(currentUri.Contains("/reports")){
+            return "Reports";
+        }
+        return currentUri.Contains("/manage-customer") ? "Manage Customer" : "Dashboard";
+    }
+}

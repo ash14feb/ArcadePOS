@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNetCore.Components
+@implements IDisposable
+
+<span class="@Class">@DisplayValue</span>
+
+@code {
+    [Parameter] public decimal Value { get; set; }
+    [Parameter] public string Format { get; set; } = "N0";
+    [Parameter] public string Class { get; set; } = "";
+    [Parameter] public int Duration { get; set; } = 1000; // ms
+    [Parameter] public bool Animate { get; set; } = true;
+
+    private decimal DisplayValue { get; set; }
+    private Timer? _timer;
+    private decimal _increment;
+    private int _steps = 30;
+    private int _currentStep = 0;
+
+    protected override void OnParametersSet()
+    {
+        if (Animate && Value != DisplayValue)
+        {
+            StartAnimation();
+        }
+        else
+        {
+            DisplayValue = Value;
+        }
+    }
+
+    private void StartAnimation()
+    {
+        _timer?.Dispose();
+        _currentStep = 0;
+        _steps = Math.Max(10, Duration / 30); // 30ms per frame
+        _increment = (Value - DisplayValue) / _steps;
+
+        _timer = new Timer(_ =>
+        {
+            _currentStep++;
+            if (_currentStep >= _steps)
+            {
+                DisplayValue = Value;
+                _timer?.Dispose();
+                InvokeAsync(StateHasChanged);
+            }
+            else
+            {
+                DisplayValue += _increment;
+                InvokeAsync(StateHasChanged);
+            }
+        }, null, 0, 30);
+    }
+
+    public void Dispose()
+    {
+        _timer?.Dispose();
+    }
+}
